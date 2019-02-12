@@ -104,6 +104,10 @@ input:hover{
 	color: #51ce51;
     outline: #51ce51 auto 2px;
 }
+.in-danger{
+	color: #f75858;
+    outline: #f75858 auto 2px;
+}
 .primary{
 	color:#5454ef;
 }

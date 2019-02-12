@@ -101,8 +101,8 @@ function assign(t,n){
                                     if(m.val() != null){
                                         $i(n.getAttribute('data-type')+'-err').innerText = n.getAttribute('data-type')+'is taken';
                                         $i(n.getAttribute('data-type')+'-err').classList.add('danger');
-                                        if($i(n.getAttribute('data-type')+'-err').classList.contains('success'))
-                                            $i(n.getAttribute('data-type')+'-err').classList.remove('success');
+                                        if(n.classList.contains('in-success'))
+                                            n.classList.remove('in-success');
                                     }    
                                     else {
                                         n.classList.add('in-success');
