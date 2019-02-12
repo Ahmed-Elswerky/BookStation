@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Forte';
+    src: url('ForteMT.woff2') format('woff2'),
+        url('ForteMT.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
