@@ -6,6 +6,20 @@
 		<title>BookStation | Home</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/css.css" />
+        
+        <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script> -->
+        
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script> -->
+
+		<script src='./js/lib.js'></script>
+		<script src='./js/firebase.js'></script>
+		<script type="text/jsx" src='./js/js.js'></script>
+		<script type="text/jsx" src='./js/react.min.js'></script>
+		<script type="text/jsx" src='./js/react-dom.js'></script>
+		<script src='./js/babel.js'></script>
+
 	</head>
 	<body>
 		<div class="loading">Loading...</div>
@@ -36,6 +50,7 @@
 		</div> -->
 
 		<div id="bcontainer" class="body-info">
+			
 			<center class="body-info">
 				
 				<div class="AA body-info" id="home-int" style="margin-right:9vh;">
@@ -48,7 +63,7 @@
 				</div>
 				
 				<div class="AA body-info" style="margin-left:9vh;vertical-align: middle;">
-					<a href="#" style="text-decoration:none;" class="body-info"><p style="border:1px solid brown;border-radius:5px;font-size:20px; height:30px;padding-top:10px;background-color:orange;color:white;" class="body-info"><b class="body-info">Continue To The Web Version!</b></p></a>
+					<a href="#" style="text-decoration:none;" class="body-info"><p style="border:1px solid brown;border-radius:5px;font-size:20px; padding:1vh 0;background-color:#f4973a;color:white;" class="body-info"><b class="body-info">Explore the web version!</b></p></a>
 					<a class="downloads" href="#" class="body-info"><img src="./imgs/01-Download_Google_Play.png"style="width:130px;" /></a>
 					<hr width="1" style="margin:auto 2vw;height:5vh;display:inline-block;">
 					<a class="downloads" href="#" class="body-info"><img src="./imgs/01-Download_App_Store.png" style="width:130px;" /></a>
@@ -94,24 +109,28 @@
 					<div class="List body-info">
 						<img src="./imgs/00-BS_Logo.gif" width="50" height="50" class="body-info" /> <p> BookStation</p>
 					</div>
-					<a href="#" class="List" class="body-info">Features</a><hr>
-					<a href="#" class="List" class="body-info">Application</a><hr>
-					<a href="#" class="List" class="body-info">FAQ</a><hr>
-					<a href="#" class="List" class="body-info">Terms<br />& Policies</a><hr>
-					<a href="#" class="List" class="body-info">Contact us</a><hr>
-					<a href="#"  class="body-info"><img src="./imgs/00-Social_Facebook_icon.png" width="40" height="40" class="body-info"/></a>
-					<a href="#"  class="body-info"><img src="./imgs/00-Social_Twitter_icon.png" width="40" height="40" class="body-info"/></a>
-					<a href="#" class="body-info"><img src="./imgs/00-Social_Instagram_icon.png" width="40" height="40" class="body-info"/></a>
+					<div>
+						<a href="#" class="List" class="body-info">Features</a><hr>
+						<a href="#" class="List" class="body-info">Application</a><hr>
+						<a href="#" class="List" class="body-info">FAQ</a><hr>
+						<a href="#" class="List" class="body-info">Terms & Policies</a><hr>
+						<a href="#" class="List" class="body-info">Contact us</a>
+					</div>
+					<div>
+						<a href="#"  class="body-info"><img src="./imgs/00-Social_Facebook_icon.png" class="body-info"/></a>
+						<a href="#"  class="body-info"><img src="./imgs/00-Social_Twitter_icon.png" class="body-info"/></a>
+						<a href="#" class="body-info"><img src="./imgs/00-Social_Instagram_icon.png" class="body-info"/></a>
+					</div>
 					
 				</center>
 				
 			</footer>
-				
-
+			
+			
 			
 		</div>
-
-		<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+		
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script> -->
 		<script>
 			// Initialize Firebase
 			var config = {
@@ -125,7 +144,6 @@
 			firebase.initializeApp(config);  
 		</script>
 
-		<script src="js/lib.js"></script>
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
 	</body>
 </html>

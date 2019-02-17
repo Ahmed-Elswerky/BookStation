@@ -10,15 +10,13 @@ function cl(m){
     console.log(m);
 }
 
-function incl(m){
-    var imported = document.createElement('script');
-    if(m == './js.js')
-        imported.type = "text/jsx";
-    imported.src = m;
-    document.head.appendChild(imported);
-}
-
-incl('./js/js.js');
+// function incl(m,x){
+//     var imported = document.createElement('script');
+//     x? imported.type = "text/jsx":imported.type='text/javascript';
+//     imported.src = './js/'+ m;
+//     document.head.appendChild(imported);
+// }
+// incl('includes.js',0)
 
 function toggleId(d){
     if($i(d) != undefined){

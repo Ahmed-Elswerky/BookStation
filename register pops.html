@@ -122,25 +122,44 @@
 
     <div class="gray-back hidable" id="gray-back-log">
         <div class="pop" onmouseover="on=true" onmouseout="on=false">
-            <div class="header">
-                Log in
-            </div>
-            <form action="" onsubmit="sign('in')">
-                <div class="body">
-                    <div class="inp-cont">
-                        <label for="log-mail">Email</label>
-                        <input type="mail" id="log-mail"  autocomplete="email" required>
-                    </div>
+                <div class="greating">
+                    <h1>Welcom back!</h1>
+                    <p>We missed you!, no, really, we did!</p>
+                    <small>Don't have an account?... no problem!, you can always <a onclick="pop('up')"><span>Create one!</span></a></small>
+                </div>
+                
+                <fieldset id="int-sign">
+                    <legend>
+                        Sign in
+                    </legend>
                     <div>
-                        <label for="log-pass">Password</label>
-                        <input type="password" id="log-pass" minlength="5" autocomplete="current-password" required>
+                        <form action="" onsubmit="sign('in');">
+                            <div style="display: inline-block">
+                                <div class="inp-cont">
+                                    <input type="text" id="logn-mail" onkeydown="assign('fire-check',this)" data-type="email" autocomplete="name" required>
+                                    <label for="sign-name">Email</label>
+                                </div>
+                                <div class="inp-cont">
+                                    <input type="text" id="log-pass" data-type="password" autocomplete="email" required>
+                                    <label for="sign-mail">Password</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-login">Log in</button>
+                        </form>
                     </div>
-                </div>
-                <div class="footer">
-                    <button class="btn shadow">Cancel</button>
-                    <button class="btn success success shadow">Done</button>
-                </div>
-            </form>
+                </fieldset>
+                
+                <fieldset id="ext-sign">
+                    <legend>
+                        Or log in using..
+                    </legend>
+                    <div>
+                        <button class="btn"><img src="./imgs/04-Login_Google.png" alt=""></button>
+                        <button class="btn"><img src="./imgs/04-Login_Twitter.png" alt=""></button>
+                        <button class="btn"><img src="./imgs/04-Login_Goodreads.png" alt=""></button>
+                    </div>
+                </fieldset>
+               
         </div>
     </div>
     

@@ -1,6 +1,6 @@
 
 
-var name,email,id,on = false;
+var name,email,id,on = false,ref=firebase.database().ref();
 
 window.onload = function(){
     firebase.auth().onAuthStateChanged(u=>{
@@ -99,8 +99,8 @@ function assign(t,n){
                                 c=0;
                                 firebase.database().ref('users/').orderByChild(n.getAttribute('data-type')).equalTo(n.value).once('value').then(m=>{
                                     if(m.val() != null){
-                                        $i(n.getAttribute('data-type')+'-err').innerText = n.getAttribute('data-type')+'is taken';
-                                        $i(n.getAttribute('data-type')+'-err').classList.add('danger');
+                                        // $i(n.innerText = n.getAttribute('data-type')+'is taken';
+                                        n.classList.add('danger');
                                         if(n.classList.contains('in-success'))
                                             n.classList.remove('in-success');
                                     }    
@@ -141,6 +141,10 @@ function sign(t){
                 firebase.auth().currentUser.updateProfile({
                     displayName:name
                 })
+                ref.child('users/'+firebase.auth().currentUser.uid).set({
+                    name:name,
+                    email:email
+                });
             }).catch(function(err){
                 cl(err.message)
             });
