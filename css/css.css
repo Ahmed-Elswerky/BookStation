@@ -160,7 +160,7 @@ input:hover{
 }
 
 .shadow{
-    box-shadow: 0 2px 0.01rem 0.01rem #0000004f;
+    box-shadow:0 1px 2px 1px #0000004f;
 }
 
 .success{
@@ -182,14 +182,17 @@ input:hover{
 
 body nav.nav{
 	height:7.2vh;
-	background:wheat;
+	background:#f4ece6;
+	color:#65513f;
+	padding: 0 2vw;
 	z-index:1;
+}
+nav ul{
 	display: flex;
     justify-content: space-between;
-    padding: 0 2vw;
 }
 nav *{
-	font-weight: 500;
+	font-weight: bolder;
 	line-height: 7.2vh;
 	margin-top:auto !important;
 	margin-bottom:auto !important;
@@ -229,14 +232,15 @@ nav ul .active{
 nav ul .active a{
     color: white;
 }
-nav ul li{
+/* nav ul li{
 	display:inline;
 	margin:0 2vw;
     padding: 0.2rem 0.5rem;
-}
+} */
+
 
 nav #sign{
-	margin-left: 40vw ;
+	/* margin-left: 40vw ; */
 }
 nav .sign-btn{
 	background: #F4973A;
@@ -253,6 +257,47 @@ nav #lang img{
 	padding: 0;
     margin: 0;
     border-radius: 50%;
+}
+nav li{
+	position: relative;
+	height:7.2vh;
+	line-height: 7.2vh !important;
+	display: inline-flex;
+}
+nav ul li img{
+	width:2vw;
+}
+nav li div.dropDown{
+	position: absolute;
+	padding:2vw;
+	top:3.2vh;
+	right:-8.5vw;
+	display:none;
+	
+	z-index: 3;
+}
+nav li div.dropDown .dropContain{
+	background:white;
+	width: 15vw;
+	min-height:4vh;
+	border-radius:2px;
+	z-index: 3;
+}
+.dropDown .dropContain:before {
+    content: '';
+    position: absolute;
+    top: 1vh;
+    right: calc(8.7vw);
+    border: 0.8vw solid #ffffff00;
+	border-bottom-color: white;
+	filter:drop-shadow(0 -2px 0.01px #0000004f);
+	z-index: 0;
+}
+.dropDown:hover{
+	display:block;
+}
+nav ul li i.dropIcon:hover + .dropDown{
+	display:block;
 }
 
 
@@ -406,6 +451,32 @@ nav #lang img{
 	left:calc(6vw);
 	background:#FAFAFA;
 	padding:0 0.5vw;
+}
+
+.inp-cont-mini-cont{
+	display: flex;
+    justify-content: space-around;
+    flex-flow: row;
+}
+.inp-cont-mini{
+	position: relative;
+	text-align: center;
+}
+.inp-cont-mini input{
+	width: 15vw;
+    height: 2.5rem;
+    max-width: 20rem;
+    margin: 1rem auto;
+}
+.inp-cont-mini label{
+	display: block;
+    position: absolute;
+    color: grey;
+    top: calc(1.45em);
+    left: calc(0.5em);
+	background: #FAFAFA;
+	font-weight: bolder;
+    padding: 0 0.5vw;
 }
 
 

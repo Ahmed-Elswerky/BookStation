@@ -1,0 +1,47 @@
+<ul>
+    <li id="brand">
+        <img src="./imgs/00-BS_Logo.gif" draggable="false" alt="">
+            BookStation
+    </li>
+    <li class="active in"><a href="./Home">Home</a></li>
+    <li class="in"><a href="./My Books">My Books</a></li>
+    <li class="in"><a href="./Transactions">Transactions</a></li>
+    <li id="search">
+        <input type="search" placeholder="Search for a book!" autocomplete="off">
+        <div class="dropDown"></div>
+    </li>
+    <hr class="in" style="height:4vh;" size="40">
+    <li class="in">
+        <div id="notification">
+            <i class="dropIcon"><img src="./imgs/notification.png" alt="Notification bell"></i>   
+            <div class="dropDown ">
+                <div class="dropContain shadow"></div>
+            </div>
+        </div>
+    </li>
+    <li class="in">
+        <div id="trans">
+            <i class="dropIcon"><img src="./imgs/switch.png" alt="Swapping icon"></i>
+            <div class="dropDown ">
+                <div class="dropContain shadow"></div>
+            </div>
+        </div>
+    </li>
+    <li class="in">
+        <div id="people">
+            <i class="dropIcon"><img src="./imgs/users.png" alt="users icon"></i>
+            <div class="dropDown ">
+                <div class="dropContain shadow"></div>
+            </div>
+        </div>
+    </li>
+    <li class="in" style='font-size:1.4rem;font-weight:500;'>
+        <h1 id="username"></h1>
+        <a href='#' style='margin:1vw' onclick='firebase.auth().signOut();window.location.reload()'><bold style="font-size:0.7rem;">Log out</bold></a>
+    </li>
+    <li id="sign" class="out">
+        <button class="shadow btn log-btn" onmouseover="on=true" onmouseout="on=false" onclick="pop('in')">LOG IN</button>
+        <button class="shadow success btn sign-btn" onmouseover="on=true" onmouseout="on=false" onclick="pop('up')"	>SIGN UP</button>
+    </li>
+    <div id="lang"><img class="btn shadow" src="./imgs/00-Language.png" alt=""></div>
+</ul>

@@ -10,14 +10,6 @@ function cl(m){
     console.log(m);
 }
 
-// function incl(m,x){
-//     var imported = document.createElement('script');
-//     x? imported.type = "text/jsx":imported.type='text/javascript';
-//     imported.src = './js/'+ m;
-//     document.head.appendChild(imported);
-// }
-// incl('includes.js',0)
-
 function toggleId(d){
     if($i(d) != undefined){
         if($i(d).classList.contains('hide')){
@@ -54,12 +46,15 @@ function hide(t,k){
 }
     
 
-function pLoad(p,i){
+function pLoad(p,i,f){
     var xml = new XMLHttpRequest;
     xml.onreadystatechange = function(){
         if(this.status == 200 && this.readyState == 4)
-            if(this.responseText != undefined)
-                $i(i).innerHTML += this.responseText;
+            if(this.responseText != undefined){
+                $i(i).innerHTML += this.responseText
+                f()
+                cl('load')
+            }
     }
     xml.open('get',p+'.html',true);
     xml.send();

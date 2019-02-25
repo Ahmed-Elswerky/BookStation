@@ -19,8 +19,18 @@
                         </legend>
                         <div>
                             <small id="name-err"></small>
+                            <div class="inp-cont-mini-cont">
+                                <div class="inp-cont-mini">
+                                    <input type="text" id="sign-f-name" autocomplete="given-name" required>
+                                    <label for="sign-f-name">First name</label>
+                                </div>
+                                <div class="inp-cont-mini">
+                                    <input type="text" id="sign-l-name" autocomplete="family-name" required>
+                                    <label for="sign-l-name">Last name</label>
+                                </div>
+                            </div>
                             <div class="inp-cont">
-                                <input type="text" id="sign-name" onkeydown="assign('fire-check',this)" data-type="name" autocomplete="name" required>
+                                <input type="text" id="sign-u-name" onkeydown="assign('fire-check',this)" data-type="name" autocomplete="name" required>
                                 <label for="sign-name">User name</label>
                             </div>
                             <div class="inp-cont">
@@ -136,12 +146,12 @@
                         <form action="" onsubmit="sign('in');">
                             <div style="display: inline-block">
                                 <div class="inp-cont">
-                                    <input type="text" id="logn-mail" onkeydown="assign('fire-check',this)" data-type="email" autocomplete="name" required>
-                                    <label for="sign-name">Email</label>
+                                    <input type="text" id="log-mail" onkeydown="assign('fire-check',this)" data-type="email" autocomplete="email" required>
+                                    <label for="log-mail">Email</label>
                                 </div>
                                 <div class="inp-cont">
-                                    <input type="text" id="log-pass" data-type="password" autocomplete="email" required>
-                                    <label for="sign-mail">Password</label>
+                                    <input type="password" id="log-pass" data-type="password" autocomplete="current-password" required>
+                                    <label for="log-pass">Password</label>
                                 </div>
                             </div>
                             <button class="btn btn-login">Log in</button>

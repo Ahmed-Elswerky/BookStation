@@ -1,23 +1,40 @@
 
 
-var name,email,id,on = false,ref=firebase.database().ref();
+var user,on = false,ref=firebase.database().ref();
+
+var fire = {
+     loadUser:function(){
+        firebase.auth().onAuthStateChanged(u=>{
+            if(u){
+                user = {
+                    id:u.uid,
+                    email:u.email,
+                    name:u.displayName
+                }
+
+                pLoad('intro','bcontainer',()=>{})
+                
+                hide('out','c');
+
+                $i('username').innerHTML = user.name;
+            }
+            else{
+                user = false;
+
+                pLoad('intro','bcontainer',()=>{})
+                
+                pLoad('register pops','bcontainer',()=>{});
+                hide('in','c');  
+            } 
+            hide('loading','c');
+            document.body.style.overflow = 'auto';
+        });
+    }
+}
 
 window.onload = function(){
-    firebase.auth().onAuthStateChanged(u=>{
-        if(u){
-            id = u.uid;
-            email = u.email;
-            pLoad('main');
-            hide('out','c');
-            $i('user').innerHTML = '<li style=\'font-size:1.4rem;font-weight:500;\'>'+firebase.auth().currentUser.displayName+'<li>'+'<a href=\'#\' style=\'font-size:0.7rem;margin:1vw\' onclick=\'firebase.auth().signOut()\'>Log out</small>';
-        }
-        else{
-            pLoad('register pops','bcontainer');
-            hide('in','c');  
-        } 
-        hide('loading','c');
-        document.body.style.overflow = 'auto';
-    });
+    cl('asd')
+    pLoad('navbar','navbar',fire.loadUser)
 
     document.body.addEventListener('click',function(){
         if(!on){
@@ -70,7 +87,7 @@ function assign(t,n){
     switch(t){
         case 'sign':{
             n == 1 ? 
-                validateEmail($i('sign-mail').value) && $i('sign-name').classList.contains('in-success') ?
+                validateEmail($i('sign-mail').value) && $i('sign-u-name').classList.contains('in-success') ?
                     slide(n)
                 :1
             : 1; 
@@ -136,14 +153,16 @@ function sign(t){
             cl('up');
             var email = $i('sign-mail').value,
             pass = $i('sign-pass').value,
-            name = $i('sign-name').value;
+            name = $i('sign-f-name').value + ' ' + $i('sign-l-name').value,
+            uName = $i('sign-u-name').value;
             firebase.auth().createUserWithEmailAndPassword(email,pass).then(()=>{
                 firebase.auth().currentUser.updateProfile({
                     displayName:name
                 })
                 ref.child('users/'+firebase.auth().currentUser.uid).set({
                     name:name,
-                    email:email
+                    email:email,
+                    userName:uName
                 });
             }).catch(function(err){
                 cl(err.message)
@@ -154,10 +173,9 @@ function sign(t){
             cl('in');
             var email = $i('log-mail').value,
             pass = $i('log-pass').value;
-            firebase.auth().signInWithEmailAndPassword(email,pass);
-            firebase.database().ref('users/'+id).once('value').then(m=>{
-                name = m.val().name;
-            })
+            firebase.auth().signInWithEmailAndPassword(email,pass).then(()=>{
+                window.location.reload();
+            });
             break;
         };
         default:break;
