@@ -1,0 +1,63 @@
+<ul>
+    <li id="brand">
+        <img src="imgs/00-BS_Logo.gif" class="f-l-s" draggable="false" alt="">
+            BookStation
+    </li>
+    <li class=" in ">
+        <a id="home" class="menu-link f-l-h active" href="">Home</a>
+        <a id="book-shelf" class="menu-link f-l-h" href="book-shelf">Book Shelf</a>
+        <a id="transactions" class="menu-link f-l-h" href="Transactions">Transactions</a>
+    </li>
+
+    <li id="search">
+        <div id="notification" class="dropIcon-cont">
+            <input type="search" class="dropIcon" placeholder="Search for a book!" onkeydown="assign('check',this,search)" autocomplete="off">
+            <div class="dropDown ">
+                <div class="dropContain shadow"></div>
+            </div>
+        </div>
+    </li>
+    
+    <hr class="in" style="height:4vh;" size="40">
+    
+    <li class="in">
+        <div id="notification" class="dropIcon-cont">
+            <i class="fas fa-bell dropIcon"></i>
+            <div class="dropDown ">
+                <div class="dropContain shadow"></div>
+            </div>
+        </div>
+    </li>
+    <li class="in">
+        <div id="trans" class="dropIcon-cont">
+            <i class="fas fa-exchange-alt dropIcon"></i>
+            <div class="dropDown ">
+                <div class="dropContain shadow"></div>
+            </div>
+        </div>
+    </li>
+    <li class="in">
+        <div id="people" class="dropIcon-cont">
+            <i class="fas fa-users dropIcon"></i>
+            <div class="dropDown ">
+                <div class="dropContain shadow"></div>
+            </div>
+        </div>
+    </li>
+    <li class="in dropIcon-cont" style='font-size:1.4rem;font-weight:500;'>
+        <h1 id="username" class="dropIcon shadow"></h1>
+        <div class="dropDown ">
+            <div class="dropContain shadow">
+                <a href='#' style='margin:1vw' onclick='firebase.auth().signOut();window.location.reload()'>
+                    <bold style="font-size:0.7rem;">Log out</bold>
+                </a>
+            </div>
+        </div>
+        
+    </li>
+    <li id="sign" class="out">
+        <button class="shadow btn log-btn" onmouseover="on=true" onmouseout="on=false" onclick="pop('in')">LOG IN</button>
+        <button class="shadow success btn sign-btn" onmouseover="on=true" onmouseout="on=false" onclick="pop('up')"	>SIGN UP</button>
+    </li>
+    <!-- <div id="lang"><img class="out btn shadow f-l-s" src="imgs/00-Language.png" alt=""></div> -->
+</ul>

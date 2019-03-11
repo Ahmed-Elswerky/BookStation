@@ -1,0 +1,6 @@
+Default: Arial
+--
+Logo: Forte
+Questions (What, Why.. etc): Arial Rounded MT
+Quote: Edwardian Script ITC, Quoted by (Author name): Copperplate Gothic
+Sentence below title (in popups): Comic Sans MS

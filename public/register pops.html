@@ -1,0 +1,175 @@
+
+    <div class="gray-back hidable" id="gray-back-sign">
+        <div class="pop" onmouseover="on=true" onmouseout="on=false">
+            <!-- <div class="loading">Loading...</div> -->
+            
+            <div class="close"></div>
+            <div class="slide-cont">
+                <div id="slide1" class="slide s-show">
+                    
+                    <div class="greating">
+                        <h1>New here?, Welcome!</h1>
+                        <p>We're happy to see you, enjoy!</p>
+                        <small>Already have an account??.. you should <a onclick="pop('in')"><span>Log in!</span></a></small>
+                    </div>
+                    
+                    <fieldset id="int-sign">
+                        <legend>
+                            Create an account with us!
+                        </legend>
+                        <div>
+                            <small id="name-err"></small>
+                            <div class="inp-cont-mini-cont">
+                                <div class="inp-cont-mini">
+                                    <input type="text" id="sign-f-name" autocomplete="given-name" required>
+                                    <label for="sign-f-name">First name</label>
+                                </div>
+                                <div class="inp-cont-mini">
+                                    <input type="text" id="sign-l-name" autocomplete="family-name" required>
+                                    <label for="sign-l-name">Last name</label>
+                                </div>
+                            </div>
+                            <div class="inp-cont">
+                                <input type="text" id="sign-u-name" onkeydown="assign('check',this,fireCheck)" data-type="name" autocomplete="name" required>
+                                <label for="sign-name">User name</label>
+                            </div>
+                            <div class="inp-cont">
+                                <input type="text" id="sign-mail" onkeydown="assign('check',this,fireCheck)" data-type="email" autocomplete="email" required>
+                                <label for="sign-mail">Email</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset id="ext-sign">
+                        <legend>
+                            Or sign up using..
+                        </legend>
+                        <div>
+                            <button class="btn"><img class="f-l-s" src="imgs/05-Signup_Google.png" alt=""></button>
+                            <button class="btn"><img class="f-l-s" src="imgs/05-Signup_Twitter.png" alt=""></button>
+                            <button class="btn"><img class="f-l-s" src="imgs/05-Signup_Goodreads.png" alt=""></button>
+                        </div>
+                    </fieldset>
+                
+                    <div class="footer">
+                        <button class="next" onclick="assign('sign',1,()=>{})">Next</button>
+                    </div>
+
+                </div>
+
+                <div id="slide2" class="slide s-hide">
+
+                    <div class="greating">
+                        <h1>One last step..</h1>
+                        <p>Putting the final touches of your account..</p>
+                    </div>
+
+                    <div class="inp-cont">
+                        <input type="password" id="sign-pass" required>
+                        <label for="sign-pass">Passowrd:</label>
+                    </div>
+
+                    <div class="inp-cont">
+                        <!-- <label for="sign-place">University:</label> -->
+                        <select name="" id="sign-place">
+                            <option value="">Select university</option>
+                            <option value="o6u">October 6th university</option>
+                        </select>
+                    </div>
+                    
+                    <div class="inp-cont">
+                        <input type="number" id="sign-phone" required>
+                        <label for="sign-phone">Phone number:</label>
+                    </div>
+
+                    <div class="footer">
+                        <button class="back" onclick="slide(0)">back</button>
+                        <button class="next" onclick="assign('sign',2,()=>{})">Next</button>
+                    </div>
+
+                </div>
+
+                 <div id="slide3" class="slide s-hide">
+
+                    <div class="greating">
+                        <h1>Code of honor</h1>
+                        <p>We care about you .. and your data</p>
+                        <span>We will never share your information with anyone without your explicit permission, However your phone number will be visible to those whom you accept their requests and those who accept your requests. Also, your governorate and your phone will be used as the defualt location for the books you list, and the location that you choose for the books you list will be publicly available to any user.<br/>For more detailed information, we highly recomment reading our <a href=""> Terms of service</a></span>
+                    </div>
+
+                    <div class="footer">
+                        <button class="back" onclick="slide(1)">back</button>
+                        <button class="next" onclick="slide(3)">Next</button>
+                    </div>
+
+                </div>
+
+                 <div id="slide4" class="slide s-hide">
+
+                    <div class="greating">
+                        <h1>Hooray!</h1>
+                        <p>A new charachter in a novel is always welcomed!</p>
+                        <span>Now all you have to do is to check your mail inbox, we have sent you a verfication link, follow it and your account will be verified. after verification, sign in your username and password then start exploring!</span>
+                        <hr>
+                        <small>
+                            Cant't wait to see you exchanging books, we know you can't wait to start reading,however, it's always a good idea to start with our <a href=""> Terms of service</a>
+                        </small>
+                    </div>
+
+                    <div class="footer">
+                        
+                        <button class="next" onclick="window.location.reload()">Done</button>
+                    </div>
+
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+
+
+    <div class="gray-back hidable" id="gray-back-log">
+        <div class="pop" onmouseover="on=true" onmouseout="on=false">
+                <div class="greating">
+                    <h1>Welcom back!</h1>
+                    <p>We missed you!, no, really, we did!</p>
+                    <small>Don't have an account?... no problem!, you can always <a onclick="pop('up')"><span>Create one!</span></a></small>
+                </div>
+                
+                <fieldset id="int-sign">
+                    <legend>
+                        Sign in
+                    </legend>
+                    <div>
+                        <form action="" onsubmit="sign('in');return false">
+                            <div style="display: inline-block">
+                                <div class="inp-cont">
+                                    <input type="text" id="log-mail" data-type="email" autocomplete="email" required>
+                                    <label for="log-mail">Email</label>
+                                </div>
+                                <div class="inp-cont">
+                                    <input type="password" id="log-pass" data-type="password" autocomplete="current-password" required>
+                                    <label for="log-pass">Password</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-login">Log in</button>
+                        </form>
+                    </div>
+                </fieldset>
+                
+                <fieldset id="ext-sign">
+                    <legend>
+                        Or log in using..
+                    </legend>
+                    <div>
+                        <button class="btn"><img class="f-l-s" src="imgs/04-Login_Google.png" alt=""></button>
+                        <button class="btn"><img class="f-l-s" src="imgs/04-Login_Twitter.png" alt=""></button>
+                        <button class="btn"><img class="f-l-s" src="imgs/04-Login_Goodreads.png" alt=""></button>
+                    </div>
+                </fieldset>
+               
+        </div>
+    </div>
+    

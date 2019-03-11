@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BookStation | Book Shelf</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="../css/css.css" >
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <script>var dir = '../'</script>
+		<script src='../js/lib.js'></script>
+
+	</head>
+	<body data-page="book-shelf">
+		
+		<div class="loading">Loading...</div>
+
+		<nav id="navbar" class="nav shadow"></nav>
+
+
+
+		<div id="bcontainer" class="body-info">
+			<button onclick="toggleId('gray-back-add-book')" onmouseover="on=true"  onmouseout="on=false">add</button>
+		    <div class="gray-back hidable" id="gray-back-add-book">
+		        <div class="pop" onmouseover="on=true" onmouseout="on=false">
+	                <div class="greating">
+	                    <h1>Add a book</h1>
+	                    <form action="" onsubmit="submitBook(event)">
+	                    	<input type="file" name="" id="file" onchange="displayImage(this)">
+	                    	<div class="inp-cont">
+                                <input type="text" id="title" data-type="email" autocomplete="email" required>
+                                <label for="title">Book title</label>
+                            </div>
+                            <div class="inp-cont">
+                                <input type="text" id="author" data-type="email" autocomplete="email" required>
+                                <label for="author">Author name</label>
+                            </div>
+                            <div class="inp-cont">
+                                <input type="text" id="isbn" data-type="email" autocomplete="email" required>
+                                <label for="isbn">ISBN Num.</label>
+                            </div>
+                            <div class="inp-cont">
+                                <input type="text" id="tags" data-type="email" autocomplete="email" required>
+                                <label for="tags">Tags<small>(genres)</small></label>
+                            </div>
+                            <button class="btn">Submit</button>
+	                    </form>
+	                </div>
+		        </div>
+		    </div>
+
+		    <div id="booksContain"></div>
+		</div>
+		
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script> -->
+		<script src='../js/firebase.js'></script>
+		<script>
+			// Initialize Firebase
+			var config = {
+			apiKey: "AIzaSyCTGaL_XbJrENacVsztsH32FWkI-4v9GUQ",
+			authDomain: "bookstation-90833.firebaseapp.com",
+			databaseURL: "https://bookstation-90833.firebaseio.com",
+			projectId: "bookstation-90833",
+			storageBucket: "bookstation-90833.appspot.com",
+			messagingSenderId: "1030883595078"
+			};
+			firebase.initializeApp(config);  
+		</script>
+		<script src='../js/js.js'></script>
+		<script src="../js/books.js"></script>
+
+	</body>
+</html>
