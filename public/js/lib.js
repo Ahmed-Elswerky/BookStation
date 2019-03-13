@@ -11,13 +11,15 @@ function cl(m){
 }
 
 function toggleId(d){
+    document.body.style.overflow = 'hidden'
     if($i(d) != undefined){
         if($i(d).classList.contains('hide')){
             $i(d).classList.remove('hide');
-            $i(d).classList.add('show');
+            if(!$i(d).classList.contains('gray-back'))
+                $i(d).classList.add('show');
         }
         else{
-            if(!$i(d).classList.contains('show'))
+            if(!$i(d).classList.contains('show') && !$i(d).classList.contains('gray-back'))
                 $i(d).classList.add('show');
         }
     }
@@ -43,6 +45,8 @@ function hide(t,k){
     if(k == 'i' && $i(t))
         if(!$i(t).classList.contains('hide'))
             $i(t).classList.add('hide');
+    document.body.style.overflow = 'auto';
+    
 }
   
 function remove(t){
@@ -66,3 +70,35 @@ function pLoad(p,i,f){
     xml.send();
 }
 
+
+//create the book html element and append it to the parent
+function book(i,title,author,isbn,tags){
+	var img = document.createElement('img'),
+	bElem = document.createElement('div'),
+	cont = document.createElement('div'),
+	p = document.createElement('p'),
+	p1 = document.createElement('p'),
+	h1 = document.createElement('p'),
+	tag = document.createElement('p');
+	
+	bElem.classList.add('book');
+	tag.classList.add('b-tag');
+
+	img.src = i
+	p1.innerHTML = isbn
+	h1.innerHTML = title
+	p.innerHTML = author
+	tag.innerHTML = tags
+
+	cont.appendChild(p1)
+	cont.appendChild(h1)
+	cont.appendChild(p)
+	cont.appendChild(tag)
+
+	bElem.appendChild(img)
+	bElem.appendChild(cont)
+
+	if($i('bcontainer'))
+		$i('booksContain').insertAdjacentElement('afterbegin',bElem)
+
+}

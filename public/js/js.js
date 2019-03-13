@@ -72,7 +72,6 @@ var fire = {
 
             } 
             hide('loading','c');
-            document.body.style.overflow = 'auto';
         });
     }
 }
@@ -116,18 +115,16 @@ function pop(t){
 
 var ln=0,
     sld = [true,false,true,true],name=false,c=0,len=false,ti=0;    
-function slide(n){
-    var sl = $c('slide');
+function slide(n,t){
+    var sl = $c(t);
     if(sl[n]){
-        Array.from(sl).forEach (s=>{
+        Array.from(sl).forEach(s=>{
             if(s.classList.contains('s-show')){
                 s.classList.remove('s-show');
-                s.classList.add('s-hide');
             }
-
         });
-        if(sl[n].classList.contains('s-hide'))
-            sl[n].classList.remove('s-hide');
+        // if(sl[n].classList.contains('s-hide'))
+            // sl[n].classList.remove('s-hide');
         sl[n].classList.add('s-show');
         n == 2? sign('up'):1;
     }
@@ -135,20 +132,19 @@ function slide(n){
 }
 
 
-function assign(t,n,f){
+function assign(t,n,t1,f){
     switch(t){
         case 'sign':{
             n == 1 ? 
                 validateEmail($i('sign-mail').value) && $i('sign-u-name').classList.contains('in-success') ?
-                    slide(n)
+                    slide(n,t1)
                 :1
             : 1; 
             n == 2 ? 
                 $i('sign-pass').value.length > 5 && $i('sign-place').value.length >0  && $i('sign-phone').value.length >0 ?
-                    slide(n)
+                    slide(n,t1)
                 : 1 
             : 1; 
-            cl('asdasdasd')
             break;
         };
         case 'check':{
@@ -187,12 +183,13 @@ function assign(t,n,f){
 }
 
 function search(n){
-n.parentElement.children[1].children[0].innerHTML ='';
- var xml = new XMLHttpRequest;
+    n.parentElement.children[1].children[0].innerHTML ='';
+    var xml = new XMLHttpRequest;
     xml.onreadystatechange = function(){
         if(this.status == 200 && this.readyState == 4)
             if(this.responseText != undefined){
                 JSON.parse(this.responseText).items.forEach(d=>{n.parentElement.children[1].children[0].innerHTML += d.volumeInfo.title+'<br><br>'})
+                cl(n.parentElement.children[1].children[0])
             }
     }
     xml.open('get','https://www.googleapis.com/books/v1/volumes?q='+n.value,true);

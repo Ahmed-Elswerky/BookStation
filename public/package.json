@@ -1,0 +1,30 @@
+{
+  "name": "bookstation",
+  "version": "1.0.0",
+  "description": "graduation project about swapping and exchanging books ",
+  "main": "js/js.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ahmed-E-Elswerkey/BookStation.git"
+  },
+  "keywords": [
+    "books",
+    "book",
+    "swap",
+    "exchange",
+    "graduation",
+    "project"
+  ],
+  "author": "Ahmed Elswerkey, Ahmed Abbas, Ahmed Essam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ahmed-E-Elswerkey/BookStation/issues"
+  },
+  "homepage": "https://github.com/Ahmed-E-Elswerkey/BookStation#readme",
+  "dependencies": {
+    "serve": "^10.1.2"
+  }
+}

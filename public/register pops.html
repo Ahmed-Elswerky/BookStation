@@ -1,13 +1,13 @@
 
-    <div class="gray-back hidable" id="gray-back-sign">
+    <div class="gray-back hidable hide" id="gray-back-sign">
         <div class="pop" onmouseover="on=true" onmouseout="on=false">
             <!-- <div class="loading">Loading...</div> -->
             
             <div class="close"></div>
             <div class="slide-cont">
-                <div id="slide1" class="slide s-show">
+                <div id="slide1" class="slide1 slide slides-show">
                     
-                    <div class="greating">
+                    <div class="greeting">
                         <h1>New here?, Welcome!</h1>
                         <p>We're happy to see you, enjoy!</p>
                         <small>Already have an account??.. you should <a onclick="pop('in')"><span>Log in!</span></a></small>
@@ -30,11 +30,11 @@
                                 </div>
                             </div>
                             <div class="inp-cont">
-                                <input type="text" id="sign-u-name" onkeydown="assign('check',this,fireCheck)" data-type="name" autocomplete="name" required>
+                                <input type="text" id="sign-u-name" onkeydown="assign('check',this,'',fireCheck)" data-type="name" autocomplete="name" required>
                                 <label for="sign-name">User name</label>
                             </div>
                             <div class="inp-cont">
-                                <input type="text" id="sign-mail" onkeydown="assign('check',this,fireCheck)" data-type="email" autocomplete="email" required>
+                                <input type="text" id="sign-mail" onkeydown="assign('check',this,'',fireCheck)" data-type="email" autocomplete="email" required>
                                 <label for="sign-mail">Email</label>
                             </div>
                         </div>
@@ -52,14 +52,14 @@
                     </fieldset>
                 
                     <div class="footer">
-                        <button class="next" onclick="assign('sign',1,()=>{})">Next</button>
+                        <button class="next" onclick="assign('sign',1,'slide1',()=>{})">Next</button>
                     </div>
 
                 </div>
 
-                <div id="slide2" class="slide s-hide">
+                <div id="slide2" class="slide1 slide hide">
 
-                    <div class="greating">
+                    <div class="greeting">
                         <h1>One last step..</h1>
                         <p>Putting the final touches of your account..</p>
                     </div>
@@ -83,30 +83,30 @@
                     </div>
 
                     <div class="footer">
-                        <button class="back" onclick="slide(0)">back</button>
-                        <button class="next" onclick="assign('sign',2,()=>{})">Next</button>
+                        <button class="back" onclick="slide(0,'slide1')">back</button>
+                        <button class="next" onclick="assign('sign',2,'slide1',()=>{})">Next</button>
                     </div>
 
                 </div>
 
-                 <div id="slide3" class="slide s-hide">
+                 <div id="slide3" class="slide1 slide hide">
 
-                    <div class="greating">
+                    <div class="greeting">
                         <h1>Code of honor</h1>
                         <p>We care about you .. and your data</p>
                         <span>We will never share your information with anyone without your explicit permission, However your phone number will be visible to those whom you accept their requests and those who accept your requests. Also, your governorate and your phone will be used as the defualt location for the books you list, and the location that you choose for the books you list will be publicly available to any user.<br/>For more detailed information, we highly recomment reading our <a href=""> Terms of service</a></span>
                     </div>
 
                     <div class="footer">
-                        <button class="back" onclick="slide(1)">back</button>
-                        <button class="next" onclick="slide(3)">Next</button>
+                        <button class="back" onclick="slide(1,'slide1')">back</button>
+                        <button class="next" onclick="slide(3,'slide1')">Next</button>
                     </div>
 
                 </div>
 
-                 <div id="slide4" class="slide s-hide">
+                 <div id="slide4" class="slide1 slide hide">
 
-                    <div class="greating">
+                    <div class="greeting">
                         <h1>Hooray!</h1>
                         <p>A new charachter in a novel is always welcomed!</p>
                         <span>Now all you have to do is to check your mail inbox, we have sent you a verfication link, follow it and your account will be verified. after verification, sign in your username and password then start exploring!</span>
@@ -130,9 +130,9 @@
 
 
 
-    <div class="gray-back hidable" id="gray-back-log">
+    <div class="gray-back hidable hide" id="gray-back-log">
         <div class="pop" onmouseover="on=true" onmouseout="on=false">
-                <div class="greating">
+                <div class="greeting">
                     <h1>Welcom back!</h1>
                     <p>We missed you!, no, really, we did!</p>
                     <small>Don't have an account?... no problem!, you can always <a onclick="pop('up')"><span>Create one!</span></a></small>

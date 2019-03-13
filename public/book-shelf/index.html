@@ -19,31 +19,55 @@
 
 		<div id="bcontainer" class="body-info">
 			<button onclick="toggleId('gray-back-add-book')" onmouseover="on=true"  onmouseout="on=false">add</button>
-		    <div class="gray-back hidable" id="gray-back-add-book">
-		        <div class="pop" onmouseover="on=true" onmouseout="on=false">
-	                <div class="greating">
-	                    <h1>Add a book</h1>
-	                    <form action="" onsubmit="submitBook(event)">
-	                    	<input type="file" name="" id="file" onchange="displayImage(this)">
-	                    	<div class="inp-cont">
-                                <input type="text" id="title" data-type="email" autocomplete="email" required>
-                                <label for="title">Book title</label>
-                            </div>
-                            <div class="inp-cont">
-                                <input type="text" id="author" data-type="email" autocomplete="email" required>
-                                <label for="author">Author name</label>
-                            </div>
-                            <div class="inp-cont">
-                                <input type="text" id="isbn" data-type="email" autocomplete="email" required>
-                                <label for="isbn">ISBN Num.</label>
-                            </div>
-                            <div class="inp-cont">
-                                <input type="text" id="tags" data-type="email" autocomplete="email" required>
-                                <label for="tags">Tags<small>(genres)</small></label>
-                            </div>
-                            <button class="btn">Submit</button>
-	                    </form>
-	                </div>
+		    <div class="gray-back hidable hide" id="gray-back-add-book">
+				<div class="pop" onmouseover="on=true" onmouseout="on=false">
+					<div class="slide-cont">
+
+						<div id="slide1" class="slide2 slide ">
+							<div class="greeting">
+								<h1>Search and add a book</h1>
+								<div id="search" class="dropIcon-cont">
+									<input type="search" class="dropIcon" placeholder="Search for a book!" onkeydown="assign('check',this,'',search,()=>{})" autocomplete="off">
+									<div class="dropDown ">
+										<div class="dropContain shadow"></div>
+									</div>
+								</div>
+							</div>
+							<div class="footer">
+								<button class="next" onclick="slide(1,'slide2')">Next</button>
+							</div>
+						</div>
+
+						<div id="slide2" class="slide2 slide hide">
+							<div class="greeting">
+								<h1>Add a book</h1>
+								<form action="" onsubmit="submitBook(event)">
+									<input type="file" name="" id="file" onchange="displayImage(this)">
+									<div class="inp-cont">
+										<input type="text" id="title" required>
+										<label for="title">Book title</label>
+									</div>
+									<div class="inp-cont">
+										<input type="text" id="author" required>
+										<label for="author">Author name</label>
+									</div>
+									<div class="inp-cont">
+										<input type="number" id="isbn" required>
+										<label for="isbn">ISBN Num.</label>
+									</div>
+									<div class="inp-cont">
+										<input type="text" id="tags" required>
+										<label for="tags">Tags<small>(genres)</small></label>
+									</div>
+									<button class="btn">Submit</button>
+								</form>
+							</div>
+							<div class="footer">
+								<button class="next" onclick="slide(0,'slide2')">back</button>
+							</div>
+						</div>
+
+					</div>
 		        </div>
 		    </div>
 

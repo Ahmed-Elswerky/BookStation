@@ -46,10 +46,8 @@ html,body{
 	width:100%;
 	min-height:100vh;
 }
-
 body{
 	overflow:hidden;
-	overflow-y: hidden !important;
 }
 
 a{
@@ -314,6 +312,14 @@ nav li #username{
 nav ul li i.dropIcon{
 	font-size:1.7vw;
 }
+.dropIcon-cont{
+	position: relative;
+	text-align: center;
+	z-index: 20;
+}
+.dropIcon-cont input{
+	margin: auto !important;
+}
 nav ul li div.dropIcon-cont:hover > i.dropIcon{
 	color:white;
 	filter:drop-shadow(0 0 2px #785A3E);
@@ -322,7 +328,9 @@ nav ul li div.dropIcon-cont:hover > i.dropIcon{
 .dropIcon:hover + .dropDown{
 	display:block;
 }
-
+.dropIcon[type='search']:focus + .dropDown{
+	display:block;
+}
 
 
 #sidebar{
@@ -356,7 +364,9 @@ nav ul li div.dropIcon-cont:hover > i.dropIcon{
 }
 
 .gray-back{
-	display:none;
+	display: flex;
+    justify-content: center;
+    flex-flow: column;
 	position: absolute;
 	top:0;
 	left:0;
@@ -379,12 +389,14 @@ nav ul li div.dropIcon-cont:hover > i.dropIcon{
 }
 .pop{
 	width:60vw;
+	height:100%;
 	max-height:70vh;
+	min-height: 40vh;
 	position: relative;
 	border:1px solid rgb(128, 128, 128);
 	border-radius:0.2rem;
 	background:#FAFAFA;
-	margin:20vh 20vw;
+	margin:auto;
 	box-shadow:2px 3px 13px 0.3px #525252a3;
 	vertical-align: middle;
 	overflow: auto;
@@ -423,20 +435,20 @@ nav ul li div.dropIcon-cont:hover > i.dropIcon{
 }
 
 
-.greating h1{
+.greeting h1{
 	font-size:2rem;
 	font-weight:500;
 }
-.greating p{
+.greeting p{
 	font-family: comic sans ms;
 	font-style: italic;
 	font-size:1.2rem;
 }
-.greating span{
+.greeting span{
 	font-size:1rem;
 	font-weight: 450;
 }
-.greating small span{
+.greeting small span{
 	text-shadow:0 0 0.001px brown;
 }
 
@@ -520,8 +532,21 @@ input:focus + label,input:valid + label{
 	transform:scale(0.75) translateY(calc(-100%));
 	color:brown;
 }
-
-
+.slide-cont{
+	height: 100%;
+}
+.slide{
+	display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+	height: 100%;
+}
+.slide .greeting{
+	height: 80%;
+}
+.slide .footer{
+	height: 20%;
+}
 .slide .footer{
 	display:flex;
 	height:7vh;
@@ -630,13 +655,17 @@ input:focus + label,input:valid + label{
 }
 
 .book {
-    display: inline-block;
+    display: flex;
     float: left;
     width: 25vw;
     height: 8vw;
     background: #f0f2d2;
     margin: 0.2vw;
     box-shadow: 0 0 0.1px 0.1px grey;
+}
+.book img{
+	width:70px;
+	margin-right: 2vw;
 }
 .book p{
 	display: flex;
