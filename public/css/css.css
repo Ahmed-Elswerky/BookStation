@@ -277,6 +277,22 @@ nav li #username{
     padding: 0.2vw 0.5vw;
     text-shadow: 0 0 3px #404040;
 }
+
+.dropIcon-cont{
+	position: relative;
+	text-align: center;
+	z-index: 20;
+} 
+li .dropIcon-cont{
+	position: unset;
+}
+.dropIcon-cont input{
+	margin: auto !important;
+}
+nav ul li div.dropIcon-cont:hover > i.dropIcon{
+	color:white;
+	filter:drop-shadow(0 0 2px #785A3E);
+}
 .dropDown{
 	position: absolute;
 	padding:1vw;
@@ -296,6 +312,11 @@ nav li #username{
 	border-radius:2px;
 	z-index: 3;
 }
+
+.dropContain[data-type='search']{
+	width:26.5vw;
+}
+
 .dropDown .dropContain:before {
 	content: '';
     position: absolute;
@@ -312,18 +333,7 @@ nav li #username{
 nav ul li i.dropIcon{
 	font-size:1.7vw;
 }
-.dropIcon-cont{
-	position: relative;
-	text-align: center;
-	z-index: 20;
-}
-.dropIcon-cont input{
-	margin: auto !important;
-}
-nav ul li div.dropIcon-cont:hover > i.dropIcon{
-	color:white;
-	filter:drop-shadow(0 0 2px #785A3E);
-}
+
 
 .dropIcon:hover + .dropDown{
 	display:block;
@@ -543,6 +553,7 @@ input:focus + label,input:valid + label{
 }
 .slide .greeting{
 	height: 80%;
+	z-index: 3;
 }
 .slide .footer{
 	height: 20%;

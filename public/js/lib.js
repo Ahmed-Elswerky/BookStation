@@ -72,7 +72,7 @@ function pLoad(p,i,f){
 
 
 //create the book html element and append it to the parent
-function book(i,title,author,isbn,tags){
+function book(arr,i){
 	var img = document.createElement('img'),
 	bElem = document.createElement('div'),
 	cont = document.createElement('div'),
@@ -84,11 +84,12 @@ function book(i,title,author,isbn,tags){
 	bElem.classList.add('book');
 	tag.classList.add('b-tag');
 
-	img.src = i
-	p1.innerHTML = isbn
-	h1.innerHTML = title
-	p.innerHTML = author
-	tag.innerHTML = tags
+    img.src = arr.im
+    cl(arr.im)
+	p1.innerHTML = arr.isbn
+	h1.innerHTML = arr.title
+	p.innerHTML = arr.author
+	tag.innerHTML = arr.tags
 
 	cont.appendChild(p1)
 	cont.appendChild(h1)
@@ -98,7 +99,7 @@ function book(i,title,author,isbn,tags){
 	bElem.appendChild(img)
 	bElem.appendChild(cont)
 
-	if($i('bcontainer'))
-		$i('booksContain').insertAdjacentElement('afterbegin',bElem)
+	if(i)
+		i.insertAdjacentElement('afterbegin',bElem)
 
 }

@@ -48,14 +48,19 @@ function bookInit(){
 			if(m.exists()){
 				m.forEach(d=>{
 					let v = d.val()
-					let image = ''
+					var arr = {
+						im:'',
+						title:v.title,
+						author:v.author,
+						isbn:v.isbn,
+						tags:v.tags
+					}
 					firebase.storage().ref().child('images/'+v.title).getDownloadURL().then(i=>{
-						image = i
-						cl(i)
-						book(image,v.title,v.author,v.isbn,v.tags)
+						arr.im = i
+						book(arr,$i('bcontainer'))
 					}).catch(m=>{
 						cl(m.message)
-						book('',v.title,v.author,v.isbn,v.tags)
+						book(arr,$i('bcontainer'))
 
 					})
 					key = d.key;
@@ -66,14 +71,19 @@ function bookInit(){
 					m.forEach(d=>{
 						if(d.key != key){
 							let v = d.val()
-							let image = ''
+							var arr = {
+								im:'',
+								title:v.title,
+								author:v.author,
+								isbn:v.isbn,
+								tags:v.tags
+							}
 							firebase.storage().ref().child('images/'+v.title).getDownloadURL().then(i=>{
-								image = i
-								cl(i)
-								book(image,v.title,v.author,v.isbn,v.tags)
+								arr.im = i
+								book(arr,$i('bcontainer'))
 							}).catch(m=>{
 								cl(m.message)
-								book('',v.title,v.author,v.isbn,v.tags)
+								book(arr,$i('bcontainer'))
 		
 							})
 							cl(v.title)
