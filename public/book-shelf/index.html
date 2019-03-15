@@ -11,9 +11,9 @@
 	</head>
 	<body data-page="book-shelf">
 		
-		<div class="loading">Loading...</div>
+		<!---<div class="loading">Loading...</div>--->
 
-		<nav id="navbar" class="nav shadow"></nav>
+		<nav id="navbar" class="nav shadow hide"></nav>
 
 
 
@@ -34,7 +34,7 @@
 								</div>
 							</div>
 							<div class="footer">
-								<button class="next" onclick="slide(1,'slide2')">Next</button>
+								<button class="next" onclick="slide(2,'slide2')">Next</button>
 							</div>
 						</div>
 
@@ -61,6 +61,66 @@
 									</div>
 									<button class="btn">Submit</button>
 								</form>
+							</div>
+							<div class="footer">
+								<button class="next" onclick="slide(0,'slide2')">back</button>
+							</div>
+						</div>
+
+						<div id="slide3" class="slide2 slide hide">
+							<div class="greeting">
+								<h1>Book availability..</h1>
+
+								<div>
+									<table>
+										<tbody>
+											<tr>
+												<th>
+													Available for:
+												</th>
+												<td>
+													<input type="checkbox" name="" id="">
+												</td>
+												<td>
+													<input type="checkbox" name="" id="">
+												</td>
+												<td>
+													<input type="checkbox" name="" id="">
+												</td>
+											</tr>
+										
+											<tr>
+												<th>
+													Worth:
+												</th>
+												<td>
+													<select value="">
+														<option name="" id="">5</option>
+														<option name="" id="">4</option>
+														<option name="" id="">3</option>
+														<option name="" id="">2</option>
+														<option name="" id="">1</option>
+													</select>
+												</td>
+												<td>
+													<input type="number">
+													<select value="">
+														<option name="" id="">5</option>
+														<option name="" id="">4</option>
+														<option name="" id="">3</option>
+														<option name="" id="">2</option>
+														<option name="" id="">1</option>
+													</select>
+												</td>
+												<td>
+													<input type="number">
+												</td>
+											</tr>
+										</tbody>
+									</table>	
+								</div>
+
+								<div></div>
 							</div>
 							<div class="footer">
 								<button class="next" onclick="slide(0,'slide2')">back</button>

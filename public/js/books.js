@@ -29,7 +29,7 @@ function submitBook(event){
             cl('success')
         }
 }
-
+ 
 //dispaly the blob of an uploaded image
 function displayImage(e){
 	var im = document.createElement('img')

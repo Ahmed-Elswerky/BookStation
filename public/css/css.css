@@ -47,7 +47,7 @@ html,body{
 	min-height:100vh;
 }
 body{
-	overflow:hidden;
+	/* overflow:hidden; */
 }
 
 a{
@@ -59,6 +59,9 @@ a:hover{
 	text-decoration:underline;
 }
 
+.hoverShade:hover{
+	box-shadow: 0 1px 4px 1px #0000004f;
+}
 input{
 	display: block;
 	border:1px solid rgba(139, 139, 139,0.2);
@@ -179,12 +182,23 @@ input:hover{
     z-index: 2000;
 }
 
+
+@keyframes sDown{
+	0%{
+		transform:translateY(-100%)
+	}
+	100%{
+		transform: translateY(0)
+	}
+}
+
 body nav.nav{
 	height:7.2vh;
 	background:#f4ece6;
 	color:#65513f;
 	padding: 0 2vw;
 	z-index:1;
+	animation: sDown 0.3s ease-out 1;
 }
 nav ul{
 	display: flex;
@@ -375,13 +389,13 @@ nav ul li i.dropIcon{
 
 .gray-back{
 	display: flex;
-    justify-content: center;
-    flex-flow: column;
-	position: absolute;
-	top:0;
-	left:0;
 	width:100vw;
 	height:100vh;
+    justify-content: center;
+    flex-flow: column;
+	position: fixed;
+	top:0;
+	left:0;
 	background:rgba(56, 56, 56, 0.404);
 	z-index: 100;
 }
@@ -544,23 +558,59 @@ input:focus + label,input:valid + label{
 }
 .slide-cont{
 	height: 100%;
+	max-height: 100%;
 }
+
+
+
+@keyframes s_show{
+	0%{
+		/*transform:translateX(100%);*/
+		opacity:0;
+		/*transform: scale(0.7)*/
+	}
+	100%{
+		opacity:1;
+		/*transform: scale(1);*/
+	}
+}
+
 .slide{
 	display: flex;
     flex-flow: column;
     justify-content: space-between;
 	height: 100%;
+	animation: s_show 0.3s ease-out 1;
 }
 .slide .greeting{
-	height: 80%;
-	z-index: 3;
+	height: 85%;
+    z-index: 3;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
 }
+
+.slide table{
+	width: 100%;
+	height: 30%;
+	margin: 3vw 0;
+}
+.slide table td{
+	/* vertical-align: top; */
+    text-align: center;
+	margin: auto;
+	padding:2vw 0;
+}
+.slide table td input{
+	margin: auto;
+}
+
 .slide .footer{
-	height: 20%;
+	height: 15%;
 }
 .slide .footer{
 	display:flex;
-	height:7vh;
+	min-height:7vh;
 	justify-content: space-around;
 	line-height:7vh;
 
@@ -582,17 +632,6 @@ input:focus + label,input:valid + label{
     font-weight: 500;
 }
 
-@keyframes s_show{
-	0%{
-		/*transform:translateX(100%);*/
-		opacity:0;
-		/*transform: scale(0.7)*/
-	}
-	100%{
-		opacity:1;
-		/*transform: scale(1);*/
-	}
-}
 
 .s-show{
 	animation:s_show 0.3s ease-in 1;
@@ -642,6 +681,25 @@ input:focus + label,input:valid + label{
     max-width: 29vw;
     word-break: break-word;
 }
+
+@keyframes centerPop{
+	0%{
+		transform: scale(0);
+		opacity: 0;
+	}
+	50%{
+		opacity: 0;
+		transform: scale(0.45);
+	}
+	100%{
+		transform: scale(1);
+	}
+}
+#bcontainer {
+	transform-origin:center; 
+	animation:centerPop 0.6s ease-out 1;
+}
+
 #bcontainer > center{
 	padding:5vh 0;
 }
@@ -702,6 +760,8 @@ input:focus + label,input:valid + label{
 	font-weight: 400;
 	padding-right:0.4vw;
 }
+
+
 
 
 

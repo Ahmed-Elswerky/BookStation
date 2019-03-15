@@ -71,7 +71,8 @@ var fire = {
                 remove('in','c');  
 
             } 
-            hide('loading','c');
+            // hide('loading','c');
+            toggleId('navbar')
         });
     }
 }

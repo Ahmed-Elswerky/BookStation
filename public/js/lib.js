@@ -11,12 +11,12 @@ function cl(m){
 }
 
 function toggleId(d){
-    document.body.style.overflow = 'hidden'
+    // document.body.style.overflow = 'hidden'
     if($i(d) != undefined){
         if($i(d).classList.contains('hide')){
             $i(d).classList.remove('hide');
-            if(!$i(d).classList.contains('gray-back'))
-                $i(d).classList.add('show');
+            // if(!$i(d).classList.contains('gray-back'))
+                // $i(d).classList.add('show');
         }
         else{
             if(!$i(d).classList.contains('show') && !$i(d).classList.contains('gray-back'))
@@ -45,7 +45,7 @@ function hide(t,k){
     if(k == 'i' && $i(t))
         if(!$i(t).classList.contains('hide'))
             $i(t).classList.add('hide');
-    document.body.style.overflow = 'auto';
+    // document.body.style.overflow = 'auto';
     
 }
   
