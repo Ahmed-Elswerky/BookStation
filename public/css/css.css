@@ -47,7 +47,7 @@ html,body{
 	min-height:100vh;
 }
 body{
-	/* overflow:hidden; */
+	overflow-x:hidden;
 }
 
 a{
@@ -59,8 +59,18 @@ a:hover{
 	text-decoration:underline;
 }
 
+@keyframes hov{
+	0%{
+		margin-top: calc(7.5% - 0.1vh) !important;
+	}
+	100%{
+		margin-top: calc(6.5% - 0.1vh) !important;
+	}
+}
 .hoverShade:hover{
-	box-shadow: 0 1px 4px 1px #0000004f;
+	box-shadow: 0px 3px 4px 0px #0000004f;
+	/* margin-top: calc(6.5% - 0.1vh) !important; */
+	animation:hov 0.3s ease-out 1;
 }
 input{
 	display: block;
@@ -316,6 +326,20 @@ nav ul li div.dropIcon-cont:hover > i.dropIcon{
 	display:none;
 	z-index: 3;
 }
+#search{
+	z-index: 3;
+}
+#search .dropDown{
+	padding: 0;
+	background: #fafafa;
+}
+.dropContain .book{
+	width:100%;
+}
+#search .dropDown .dropContain:before {
+	display:none;
+}
+
 .dropDown .dropContain{
 	background:white;
 	width: 15vw;
@@ -398,6 +422,7 @@ nav ul li i.dropIcon{
 	left:0;
 	background:rgba(56, 56, 56, 0.404);
 	z-index: 100;
+	cursor:url(cancel.png),auto;
 }
 .gray-back:after {
     content: 'X';
@@ -424,6 +449,7 @@ nav ul li i.dropIcon{
 	box-shadow:2px 3px 13px 0.3px #525252a3;
 	vertical-align: middle;
 	overflow: auto;
+	cursor: default;
 }
 .pop .header{
 	height:7vh;
@@ -593,7 +619,7 @@ input:focus + label,input:valid + label{
 .slide table{
 	width: 100%;
 	height: 30%;
-	margin: 3vw 0;
+	margin: 3vw 0 0;
 }
 .slide table td{
 	/* vertical-align: top; */
@@ -603,6 +629,15 @@ input:focus + label,input:valid + label{
 }
 .slide table td input{
 	margin: auto;
+}
+
+.slide #bookAdd{
+	text-align: center;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2vw;
 }
 
 .slide .footer{
@@ -737,9 +772,17 @@ input:focus + label,input:valid + label{
 	margin-right: 2vw;
 }
 .book p{
-	display: flex;
-	font-weight: bold;
-	margin:auto auto auto 0;
+	display: block;
+    width: 14vw;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	text-align: left;
+	overflow:hidden;
+    font-weight: bold;
+    font-style: normal;
+    margin: auto auto auto 0;
+    font-family: arial;
+    font-size: 1rem;
 }
 .book p:nth-child(1){
 	font-size:0.7rem;

@@ -86,10 +86,10 @@ function book(arr,i){
 
     img.src = arr.im
     cl(arr.im)
-	p1.innerHTML = arr.isbn
-	h1.innerHTML = arr.title
-	p.innerHTML = arr.author
-	tag.innerHTML = arr.tags
+	p1.innerHTML = arr.isbn;p1.title = arr.isbn
+	h1.innerHTML = arr.title;h1.title = arr.title
+	p.innerHTML = arr.author;p.title = arr.author
+	tag.innerHTML = arr.tags;tag.title = arr.tags
 
 	cont.appendChild(p1)
 	cont.appendChild(h1)
@@ -99,7 +99,20 @@ function book(arr,i){
 	bElem.appendChild(img)
 	bElem.appendChild(cont)
 
+    
+    
 	if(i)
-		i.insertAdjacentElement('afterbegin',bElem)
+        if(i.parentElement.parentElement.getAttribute('data-type') == 'pop'){
+            let dWrap = document.createElement('div')
+            dWrap.style.cursor = 'pointer'
+            dWrap.onclick = ()=>{
+                $i('bookAdd').appendChild(bElem)
+                slide(2,'slide2')
+            }
+            dWrap.appendChild(bElem)
+            i.insertAdjacentElement('afterbegin',dWrap)
+        }
+        else 
+            i.insertAdjacentElement('afterbegin',bElem)
 
 }

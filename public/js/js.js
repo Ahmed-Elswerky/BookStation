@@ -189,21 +189,22 @@ function search(n){
     xml.onreadystatechange = function(){
         if(this.status == 200 && this.readyState == 4)
             if(this.responseText != undefined){
-                JSON.parse(this.responseText).items.forEach(d=>{
-                    var arr = {
-                        im:d.volumeInfo.imageLinks.smallThumbnail,
-                        title:d.volumeInfo.title,
-                        author:d.volumeInfo.authors[0],
-                        isbn:d.volumeInfo.industryIdentifiers[0].identifier,
-                        tags:d.volumeInfo.categories[0]
-                    }
-                    book(arr,n.parentElement.children[1].children[0])
-                    // n.parentElement.children[1].children[0].innerHTML += d.volumeInfo.title+'<br><br>'
-                    
-                })
+                setTimeout(()=>{
+                    JSON.parse(this.responseText).items.forEach(d=>{
+                        var arr = {
+                            im:d.volumeInfo.imageLinks.smallThumbnail,
+                            title:d.volumeInfo.title,
+                            author:d.volumeInfo.authors[0],
+                            isbn:d.volumeInfo.industryIdentifiers[0].identifier,
+                            tags:d.volumeInfo.categories[0]
+                        }
+                        book(arr,n.parentElement.children[1].children[0])
+                        // n.parentElement.children[1].children[0].innerHTML += d.volumeInfo.title+'<br><br>'
+                    })
+                },300)
             }
     }
-    xml.open('get','https://www.googleapis.com/books/v1/volumes?q='+n.value,true);
+    xml.open('get','https://www.googleapis.com/books/v1/volumes?q='+n.value+'&key=AIzaSyBBPeeNyKzSJaA7uOl0_Emt6gc-hEhuFQY&country=us',true);
     xml.send();
 
   
