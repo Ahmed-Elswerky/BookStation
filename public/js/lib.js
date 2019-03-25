@@ -85,8 +85,8 @@ function book(arr,i){
 	tag.classList.add('b-tag');
 
     img.src = arr.im
-    cl(arr.im)
-	p1.innerHTML = arr.isbn;p1.title = arr.isbn
+
+    p1.innerHTML = arr.isbn;p1.title = arr.isbn
 	h1.innerHTML = arr.title;h1.title = arr.title
 	p.innerHTML = arr.author;p.title = arr.author
 	tag.innerHTML = arr.tags;tag.title = arr.tags
@@ -100,17 +100,47 @@ function book(arr,i){
 	bElem.appendChild(cont)
 
     
-    
-	if(i)
-        if(i.parentElement.parentElement.getAttribute('data-type') == 'pop'){
+    if(i)
+        if(i.parentElement.parentElement.getAttribute('data-type') == 'pop' || i.getAttribute('id') == 'bookAdd'){
             let dWrap = document.createElement('div')
-            dWrap.style.cursor = 'pointer'
+            dWrap.style.cursor = 'crosshair'
             dWrap.onclick = ()=>{
-                $i('bookAdd').appendChild(bElem)
+                $i('bookAdd').innerHTML = ''
+                $i('bookAdd').appendChild(bElem.cloneNode(true))
                 slide(2,'slide2')
             }
             dWrap.appendChild(bElem)
+            $i('bookId').value = arr.key
             i.insertAdjacentElement('afterbegin',dWrap)
+        }
+        if(i.classList.contains('home-p')){
+            cl('home bookssss')
+            var pc1 = document.createElement('h1'),
+            div = document.createElement('div'),
+            pc2 = document.createElement('h1'),
+            pc3 = document.createElement('h1'),
+            pc = document.createElement('p')
+        
+            pc.innerHTML = 'Available for: ';
+        	div.appendChild(pc)
+            cl('lending ' + arr.lend)
+            if(arr.lend){
+                pc1.innerHTML += 'Borrow (For: ' + arr.lendPrice + ' L.E)'
+                div.appendChild(pc1)
+                cl('lend')
+            }
+            if(arr.swap){
+                pc2.innerHTML += 'Swap (With: ' + arr.swapStars + ' Book/s)'
+                div.appendChild(pc2)
+                cl('swap')
+            }
+            if(arr.sell){
+                pc3.innerHTML += 'Buy (For: ' + arr.sellPrice + ' L.E)'
+                div.appendChild(pc3)
+                cl('sell')
+            }
+            bElem.appendChild(div)
+            i.insertAdjacentElement('afterbegin',bElem)
         }
         else 
             i.insertAdjacentElement('afterbegin',bElem)

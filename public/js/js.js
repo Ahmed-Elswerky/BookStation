@@ -1,6 +1,7 @@
 
 
 var user,on = false,ref=firebase.database().ref(),booksJs=0;
+var bookInfo;
 
 var fire = {
     fillHead:function(){
@@ -42,6 +43,39 @@ var fire = {
             if(!cla.contains('active'))
                 cla.add('active')
         }
+        if(document.body.classList.contains('home-p'))
+            ref.child('books/').once('value',m=>{
+                cl('home books')
+                if(m.exists()){
+                    m.forEach(d=>{
+                        let v = d.val()
+                        bookInfo = d;
+                        var arr = {
+                            im:'',
+                            title:v.title,
+                            author:v.author,
+                            isbn:v.isbn,
+                            tags:v.tags,
+                            swap:v.swap,
+                            swapStars:v.swapStars,
+                            lend:v.lend,
+                            lendPrice:v.lendPrice,
+                            lendPoints:v.lendPoints,
+                            sell:v.sell,
+                            sellPrice:v.sellPrice
+                        }
+                       
+                        firebase.storage().ref().child('images/'+v.title).getDownloadURL().then(i=>{
+                            arr.im = i
+                            book(arr,$i('bcontainer'))
+                        }).catch(m=>{
+                            cl(m.message)
+                            book(arr,$i('bcontainer'))
+
+                        })
+                    })
+                }
+            })
 
         firebase.auth().onAuthStateChanged(u=>{
             if(u){
@@ -163,7 +197,7 @@ function assign(t,n,t1,f){
                                 ti=0;
                                 len = false;
                                 c=0;
-                                f(n);
+                                f == search? f(n,t1) : f(n);
                                 
                                 cl('did not type for 1sec');
                             }
@@ -183,29 +217,44 @@ function assign(t,n,t1,f){
     }
 }
 
-function search(n){
+function search(n,t = ''){
     n.parentElement.children[1].children[0].innerHTML ='';
-    var xml = new XMLHttpRequest;
-    xml.onreadystatechange = function(){
-        if(this.status == 200 && this.readyState == 4)
-            if(this.responseText != undefined){
-                setTimeout(()=>{
-                    JSON.parse(this.responseText).items.forEach(d=>{
-                        var arr = {
-                            im:d.volumeInfo.imageLinks.smallThumbnail,
-                            title:d.volumeInfo.title,
-                            author:d.volumeInfo.authors[0],
-                            isbn:d.volumeInfo.industryIdentifiers[0].identifier,
-                            tags:d.volumeInfo.categories[0]
-                        }
-                        book(arr,n.parentElement.children[1].children[0])
-                        // n.parentElement.children[1].children[0].innerHTML += d.volumeInfo.title+'<br><br>'
-                    })
-                },300)
+    if(t == 'main'){
+        firebase.database().ref('users/').orderByChild('title').equalTo(n.value).once('value').then(m=>{
+            if(m.val() != null){
+                // $i(n.innerText = n.getAttribute('data-type')+'is taken';
+                n.classList.add('danger');
+                if(n.classList.contains('in-success'))
+                    n.classList.remove('in-success');
+            }    
+            else {
+                n.classList.add('in-success');
             }
+        })
     }
-    xml.open('get','https://www.googleapis.com/books/v1/volumes?q='+n.value+'&key=AIzaSyBBPeeNyKzSJaA7uOl0_Emt6gc-hEhuFQY&country=us',true);
-    xml.send();
+    else {
+        var xml = new XMLHttpRequest;
+        xml.onreadystatechange = function(){
+            if(this.status == 200 && this.readyState == 4)
+                if(this.responseText != undefined){
+                    setTimeout(()=>{
+                        JSON.parse(this.responseText).items.forEach(d=>{
+                            var arr = {
+                                im:d.volumeInfo.imageLinks.smallThumbnail,
+                                title:d.volumeInfo.title,
+                                author:d.volumeInfo.authors[0],
+                                isbn:d.volumeInfo.industryIdentifiers[0].identifier,
+                                tags:d.volumeInfo.categories[0]
+                            }
+                            book(arr,n.parentElement.children[1].children[0])
+                            // n.parentElement.children[1].children[0].innerHTML += d.volumeInfo.title+'<br><br>'
+                        })
+                    },300)
+                }
+        }
+        xml.open('get','https://www.googleapis.com/books/v1/volumes?q='+n.value+'&key=AIzaSyBBPeeNyKzSJaA7uOl0_Emt6gc-hEhuFQY',true);
+        xml.send();
+    }
 
   
 }

@@ -249,7 +249,7 @@ nav ul{
 	margin-left: -30vw;
 }
 nav ul .active{
-    background: #80808096;
+    background: rgba(128, 128, 128, 0.588);
     border-radius: 0.2rem;
     color: white;
 }
@@ -263,9 +263,6 @@ nav ul .active a{
 } */
 
 
-nav #sign{
-	/* margin-left: 40vw ; */
-}
 nav .sign-btn{
 	background: #F4973A;
 	color:white;
@@ -353,6 +350,7 @@ nav ul li div.dropIcon-cont:hover > i.dropIcon{
 
 .dropContain[data-type='search']{
 	width:26.5vw;
+	max-height: 27vh;
 }
 
 .dropDown .dropContain:before {
@@ -424,18 +422,7 @@ nav ul li i.dropIcon{
 	z-index: 100;
 	cursor:url(cancel.png),auto;
 }
-.gray-back:after {
-    content: 'X';
-    position: absolute;
-    top: 2vw;
-    right: 2vw;
-    color: white;
-    text-shadow: 0 0 7px black;
-    font-size: 2rem;
-    width: 3rem;
-    height: 3rem;
-    cursor:pointer;
-}
+
 .pop{
 	width:60vw;
 	height:100%;
@@ -478,9 +465,9 @@ nav ul li i.dropIcon{
 	margin:0.9rem auto;
 }
 .pop .footer{
-	height:9vh;
-	border-top:1.5px solid rgba(99, 99, 99, 0.378);
-	line-height:9vh;
+	/* height:9vh; */
+	/* border-top:1.5px solid rgba(99, 99, 99, 0.378); */
+	/* line-height:9vh; */
 	text-align: right;
 }
 
@@ -604,12 +591,12 @@ input:focus + label,input:valid + label{
 .slide{
 	display: flex;
     flex-flow: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
 	height: 100%;
 	animation: s_show 0.3s ease-out 1;
 }
 .slide .greeting{
-	height: 85%;
+	/* height: 85%; */
     z-index: 3;
     display: flex;
     flex-flow: column;
@@ -619,7 +606,8 @@ input:focus + label,input:valid + label{
 .slide table{
 	width: 100%;
 	height: 30%;
-	margin: 3vw 0 0;
+	/* margin: 3vw 0 0; */
+	background: hsla(0, 0%, 94%, 1);
 }
 .slide table td{
 	/* vertical-align: top; */
@@ -629,6 +617,10 @@ input:focus + label,input:valid + label{
 }
 .slide table td input{
 	margin: auto;
+}
+
+#swap:checked body{
+	border:10px solid black;
 }
 
 .slide #bookAdd{
@@ -641,13 +633,13 @@ input:focus + label,input:valid + label{
 }
 
 .slide .footer{
-	height: 15%;
+	/* height: 15%; */
 }
 .slide .footer{
 	display:flex;
-	min-height:7vh;
+	/* min-height:7vh; */
 	justify-content: space-around;
-	line-height:7vh;
+	/* line-height:7vh; */
 
 }
 .slide .footer button{
@@ -761,17 +753,20 @@ input:focus + label,input:valid + label{
 .book {
     display: flex;
     float: left;
-    width: 25vw;
     height: 8vw;
     background: #f0f2d2;
     margin: 0.2vw;
     box-shadow: 0 0 0.1px 0.1px grey;
 }
+.home-p .book{
+    width: 100%;	
+}
+
 .book img{
 	width:70px;
 	margin-right: 2vw;
 }
-.book p{
+.book  p{
 	display: block;
     width: 14vw;
     text-overflow: ellipsis;
@@ -784,19 +779,19 @@ input:focus + label,input:valid + label{
     font-family: arial;
     font-size: 1rem;
 }
-.book p:nth-child(1){
+.book > div > p:nth-child(1){
 	font-size:0.7rem;
 }
-.book p:nth-child(1):before{
+.book > div:nth-of-type(1) > p:nth-child(1):before{
 	content:'ISBN: ';
 }
-.book p:nth-child(2):before{
+.book > div > p:nth-child(2):before{
 	content:'Title: ';
 }
-.book p:nth-child(3):before{
+.book > div > p:nth-child(3):before{
 	content:'Author: ';
 }
-.book p:nth-child(4):before{
+.book > div > p:nth-child(4):before{
 	content:'Tags: ';
 }
 .book p:before{

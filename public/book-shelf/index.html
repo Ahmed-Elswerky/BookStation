@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" media="screen" href="../css/css.css" >
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <script>var dir = '../'</script>
+        <script>var dir = '../';</script>
 		<script src='../js/lib.js'></script>
 
 	</head>
@@ -46,7 +46,7 @@
 								</div>
 							</div>
 							<div class="footer">
-								<button class="next" onclick="slide(2,'slide2')">Next</button>
+								<a href="#" onclick="slide(1,'slide2')">Didn't find your book?... Add it now</a>
 							</div>
 						</div>
 
@@ -74,9 +74,11 @@
 									<button class="btn">Submit</button>
 								</form>
 							</div>
-							<div class="footer">
-								<button class="next" onclick="slide(0,'slide2')">back</button>
-							</div>
+							<!-- <div class="footer"> -->
+								<!-- <button class="next" onclick="slide(0,'slide2')">back</button> -->
+								<!-- <button class="next" onclick="slide(2,'slide2')">Next</button> -->
+
+							<!-- </div> -->
 						</div>
 
 						<div id="slide3" class="slide2 slide hide">
@@ -85,6 +87,9 @@
 
 								<div>
 									<div id="bookAdd"></div>
+
+									<form action="" onsubmit="submitBookInfo(event)">
+										<input type="hidden" id="bookId" required>
 									<table>
 										<tbody>
 											<tr>
@@ -92,13 +97,16 @@
 													Available for:
 												</th>
 												<td>
-													<input type="checkbox" name="" id="">
+													<input type="checkbox" name="" id="swap">
+													<label for="swap">Swapping</label>
 												</td>
 												<td>
-													<input type="checkbox" name="" id="">
+													<input type="checkbox" name="" id="lend">
+													<label for="lend">Lending</label>
 												</td>
 												<td>
-													<input type="checkbox" name="" id="">
+													<input type="checkbox" name="" id="sell">
+													<label for="sell">Selling</label>
 												</td>
 											</tr>
 										
@@ -107,37 +115,66 @@
 													Worth:
 												</th>
 												<td>
-													<select value="">
-														<option name="" id="">5</option>
-														<option name="" id="">4</option>
-														<option name="" id="">3</option>
-														<option name="" id="">2</option>
-														<option name="" id="">1</option>
+													<select value="" id="swap-stars">
+														<option value="5">5</option>
+														<option value="4">4</option>
+														<option value="3">3</option>
+														<option value="2">2</option>
+														<option value="1">1</option>
+													</select>
+													<label for="swap-stars">Stars</label>
+												</td>
+												<td>
+													<input type="number" id="price-g">
+													<label for="priceG">L.E</label>
+													<select value="" id="point">
+														<option value="5">5</option>
+														<option value="4">4</option>
+														<option value="3">3</option>
+														<option value="2">2</option>
+														<option value="1">1</option>
+													</select>
+													<label for="point">Points</label>
+												</td>
+												<td>
+													<input type="number" id="price">
+													<label for="price">L.E</label>
+												</td>
+											</tr>
+
+											<tr>
+												<th>
+													More details:
+												</th>
+												<td>
+													<label for="gov">Governorate:</label>
+													
+													<select value="" id="gov">
+														<option value="giza">Giza</option>
+														<!-- <option >Cairo</option> -->
+														<!-- <option >Alexandria</option> -->
+														<!-- <option >Portsaid</option> -->
+														<!-- <option >Damietta</option> -->
 													</select>
 												</td>
 												<td>
-													<input type="number">
-													<select value="">
-														<option name="" id="">5</option>
-														<option name="" id="">4</option>
-														<option name="" id="">3</option>
-														<option name="" id="">2</option>
-														<option name="" id="">1</option>
+													<label for="area">Area:</label>
+													<select value="" id="area">
+														<option value="hosary">Hosary</option>
 													</select>
-												</td>
-												<td>
-													<input type="number">
 												</td>
 											</tr>
 										</tbody>
-									</table>	
+									</table>
+									<button>Submit</button>
+									</form>	
 								</div>
 
 								<div></div>
 							</div>
-							<div class="footer">
+							<!-- <div class="footer">
 								<button class="next" onclick="slide(0,'slide2')">back</button>
-							</div>
+							</div> -->
 						</div>
 
 					</div>
