@@ -30,8 +30,7 @@ function submitBook(event){
                 author:arr.author,
                 isbn:arr.isbn,
                 tags:arr.tags,
-                from:'custom',
-                user:user.id
+                from:'custom'
             }).then(()=>{
 				$i('title').value = $i('author').value = $i('isbn').value = $i('tags').value = ''
 				book(arr,$i('bookAdd'))
@@ -54,7 +53,9 @@ function submitBookInfo(event){
                 lendPoints:$i('point').value,
 				sell:$i('sell').checked,
 				sellPrice:$i('price').value,
-				userId:user.id
+				userId:user.id,
+				gov:$i('gov').value,
+				area:$i('area').value
             }).then(()=>{
 				hide('hidable','c')
 				slide(0,'slide2')
@@ -74,56 +75,3 @@ function displayImage(e){
 }
 
 
-var key='0';
-function bookInit(){
-	if(user != null){
-		ref.child('books/').once('value',m=>{
-			if(m.exists()){
-				m.forEach(d=>{
-					let v = d.val()
-					var arr = {
-						im:'',
-						title:v.title,
-						author:v.author,
-						isbn:v.isbn,
-						tags:v.tags
-					}
-					firebase.storage().ref().child('images/'+v.title).getDownloadURL().then(i=>{
-						arr.im = i
-						book(arr,$i('bcontainer'))
-					}).catch(m=>{
-						cl(m.message)
-						book(arr,$i('bcontainer'))
-
-					})
-					key = d.key;
-				})
-			}
-			ref.child('books/').orderByKey().startAt(key+1).on('value',m=>{
-				m.forEach(d=>{
-					if(d.key != key){
-						let v = d.val()
-						var arr = {
-							im:'',
-							title:v.title,
-							author:v.author,
-							isbn:v.isbn,
-							tags:v.tags
-						}
-						firebase.storage().ref().child('images/'+v.title).getDownloadURL().then(i=>{
-							arr.im = i
-							book(arr,$i('bcontainer'))
-						}).catch(m=>{
-							cl(m.message)
-							book(arr,$i('bcontainer'))
-	
-						})
-						cl(v.title)
-						key = d.key;
-						cl('key: '+key)
-					}
-				})
-			})
-		})
-	}
-}

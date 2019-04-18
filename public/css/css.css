@@ -374,8 +374,14 @@ nav ul li i.dropIcon{
 .dropIcon:hover + .dropDown{
 	display:block;
 }
+.dropIcon:hover + .dropDown .dropContain:empty{
+	display:none;
+}
 .dropIcon[type='search']:focus + .dropDown{
 	display:block;
+}
+.dropIcon[type='search']:focus + .dropDown .dropContain:empty{
+	display:none;
 }
 
 
@@ -451,7 +457,7 @@ nav ul li i.dropIcon{
 }
 .pop fieldset{
 	width:50vw;
-	margin:auto;
+	margin:0 auto;
 	border:0;
 	border-top:1px solid rgba(0,0,0,0.4);
 }
@@ -518,8 +524,11 @@ nav ul li i.dropIcon{
 	width: 40vw;
     max-width: 30rem;
 	position: relative;
-	margin: auto;
+	margin:0 auto;
 	text-align: center;
+}
+fieldset .inp-cont{
+	margin:auto;
 }
 .inp-cont input{
 	width:30vw;
@@ -723,6 +732,8 @@ input:focus + label,input:valid + label{
 	}
 }
 #bcontainer {
+	width: 80%;
+	margin: auto;
 	transform-origin:center; 
 	animation:centerPop 0.6s ease-out 1;
 }
@@ -731,10 +742,10 @@ input:focus + label,input:valid + label{
 	padding:5vh 0;
 }
 #bcontainer > center > hr{
-	width: 90vw;
+	/* width: 90vw; */
 }
 #bcontainer > center > div:not(.AA) {
-	width:90vw;
+	/* width:90vw; */
 }
 #bcontainer > center > div:not(.AA) h1{
 	display: inline-block;

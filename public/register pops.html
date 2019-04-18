@@ -39,7 +39,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    
+                    <!-- 
                     <fieldset id="ext-sign">
                         <legend>
                             Or sign up using..
@@ -49,7 +49,7 @@
                             <button class="btn"><img class="f-l-s" src="imgs/05-Signup_Twitter.png" alt=""></button>
                             <button class="btn"><img class="f-l-s" src="imgs/05-Signup_Goodreads.png" alt=""></button>
                         </div>
-                    </fieldset>
+                    </fieldset> -->
                 
                     <div class="footer">
                         <button class="next" onclick="assign('sign',1,'slide1',()=>{})">Next</button>
@@ -132,6 +132,7 @@
 
     <div class="gray-back hidable hide" id="gray-back-log">
         <div class="pop" onmouseover="on=true" onmouseout="on=false">
+             <div class="slide">
                 <div class="greeting">
                     <h1>Welcom back!</h1>
                     <p>We missed you!, no, really, we did!</p>
@@ -142,6 +143,7 @@
                     <legend>
                         Sign in
                     </legend>
+                    <center id="log-err" style="color:#bf3737"></center>
                     <div>
                         <form action="" onsubmit="sign('in');return false">
                             <div style="display: inline-block">
@@ -158,8 +160,9 @@
                         </form>
                     </div>
                 </fieldset>
+             </div>
                 
-                <fieldset id="ext-sign">
+                <!-- <fieldset id="ext-sign">
                     <legend>
                         Or log in using..
                     </legend>
@@ -168,7 +171,7 @@
                         <button class="btn"><img class="f-l-s" src="imgs/04-Login_Twitter.png" alt=""></button>
                         <button class="btn"><img class="f-l-s" src="imgs/04-Login_Goodreads.png" alt=""></button>
                     </div>
-                </fieldset>
+                </fieldset> -->
                
         </div>
     </div>

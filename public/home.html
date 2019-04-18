@@ -1,0 +1,85 @@
+ <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>BookStation | Home</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="./imgs/00-BS_Logo.gif" type="image/x-icon">
+
+		<link rel="stylesheet" type="text/css" media="screen" href="css/css.css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+        
+	    <!-- <script src="/__/firebase/5.8.5/firebase-app.js"></script>
+	    <script src="/__/firebase/5.8.5/firebase-auth.js"></script>
+	    <script src="/__/firebase/5.8.5/firebase-database.js"></script>
+	    <script src="/__/firebase/init.js"></script> -->
+
+        <script>var dir = './';</script>
+
+		<script src='./js/lib.js'></script>
+
+		<script>
+			// google custom search key:  AIzaSyBDP4jRgkN0IvTdvfKFqzAI6ezZIEviTnY
+		</script> 
+  </body>
+	</head>
+	<body class="home-p" data-page="home-p">
+		<a href="./index.html" style="display: none" id="intro-redirect"></a>
+
+		<!----<div class="loading">Loading...</div>--->
+		<nav id="navbar" class="nav shadow hide">
+		
+		</nav>
+
+		<div id="bcontainer" class="body-info home-p">
+			
+			
+			
+	    <div class="gray-back hidable hide" id="gray-back-request">
+	        <div class="pop" onmouseover="on=true" onmouseout="on=false">
+                <div class="greeting">
+                    <h1>Initial Request</h1>
+                    <!-- <p>We missed you!, no, really, we did!</p> -->
+                </div>
+                
+                <fieldset id="init-req">
+	               <div></div>
+	               <label for="">Request for</label>
+	               <select name="" id="req-sel">
+	               </select>
+
+                </fieldset>
+                
+                <div class="footer">
+                	<button onclick="req(this)" id="req-send">Send</button>
+                </div>
+               
+	        </div>
+	    </div>
+	    
+		</div>
+		
+		
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script> -->
+		<script src='./js/firebase.js'></script>
+
+		
+		<script>
+			// Initialize Firebase
+			var config = {
+			apiKey: "AIzaSyCTGaL_XbJrENacVsztsH32FWkI-4v9GUQ",
+			authDomain: "bookstation-90833.firebaseapp.com",
+			databaseURL: "https://bookstation-90833.firebaseio.com",
+			projectId: "bookstation-90833",
+			storageBucket: "bookstation-90833.appspot.com",
+			messagingSenderId: "1030883595078"
+			};
+			firebase.initializeApp(config);  
+		</script>
+		<script src='./js/js.js'></script>
+
+
+	</body>
+</html>
