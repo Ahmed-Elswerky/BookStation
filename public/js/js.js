@@ -10,6 +10,7 @@ var fire = {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">\
         <link rel="shortcut icon" href="'+dir+'imgs/00-BS_Logo.gif" type="image/x-icon">\
         <link rel="stylesheet" type="text/css" media="screen" href="'+dir+'css/css.css" />\
+        <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">\
         ');
     },
     fixLinks:function(){
@@ -101,6 +102,7 @@ function pop(t){
     switch(t){
         case 'up':{
             toggleId('gray-back-sign');
+            $i('sign-f-name').focus()
             break;
         };
         case 'in':{
@@ -127,8 +129,7 @@ function slide(n,t){
         });
         if(sl[n].classList.contains('hide'))
             sl[n].classList.remove('hide');
-        // sl[n].classList.add('s-show');
-        t == 'slide1' && n == 2? sign('up'):1;
+        n==1? $i('sign-pass').focus():1;
     }
     else cl('no');
 }

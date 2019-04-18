@@ -142,6 +142,7 @@ input:hover{
     padding: 0 1.5rem;
 	line-height: 5vh;
 	margin:0.2rem 0.5rem;
+	font-weight:500;
 }
 .btn.btn-login{
 	float:right;
@@ -228,14 +229,14 @@ nav img{
 }
 nav #brand{
 	font-size:1.35rem;
-	font-family:Forte;
+	font-family: 'Fredoka One', cursive;
 	color:#5E4935;
 	width: 15vw;
     text-align: center;
 }
 nav #brand img{
 	width:2.6vw;
-	margin-right: 0.5vw;
+	margin-right: 0.15vw;
 }
 nav #brand:hover + #brand img{
 	border:50%;
@@ -288,15 +289,19 @@ nav li{
 nav li a.menu-link {
     line-height: 7.2vh;
     padding: 0 1.6vw;
-    border-radius:0;
+	border-radius:0;
+	font-weight: 600;
 }
 nav li #username{
-    background: #b18a65;
+    background: #785a3e;
     color: white;
     font-weight: bold;
     border-radius: 5vw;
     padding: 0.2vw 0.5vw;
-    text-shadow: 0 0 3px #404040;
+    /* text-shadow: 0 0 3px #404040; */
+}
+nav li #username:hover{
+	background:#f4973a;
 }
 
 .dropIcon-cont{
@@ -311,8 +316,7 @@ li .dropIcon-cont{
 	margin: auto !important;
 }
 nav ul li div.dropIcon-cont:hover > i.dropIcon{
-	color:white;
-	filter:drop-shadow(0 0 2px #785A3E);
+	color:#f4973a;
 }
 .dropDown{
 	position: absolute;
@@ -432,6 +436,9 @@ nav ul li i.dropIcon{
 .pop{
 	width:60vw;
 	height:100%;
+	display: flex;
+	flex-flow: column;
+	justify-content: space-evenly;
 	max-height:70vh;
 	min-height: 40vh;
 	position: relative;
@@ -474,9 +481,16 @@ nav ul li i.dropIcon{
 	/* height:9vh; */
 	/* border-top:1.5px solid rgba(99, 99, 99, 0.378); */
 	/* line-height:9vh; */
-	text-align: right;
+	/* text-align: right; */
 }
-
+#init-req-h1{
+	display: inline-block;
+    background: #796048;
+    border: 1px solid;
+    padding: 1vw;
+    border-radius: 12vw;
+    color: white;
+}
 
 .greeting h1{
 	font-size:2rem;

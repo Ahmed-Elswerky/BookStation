@@ -164,18 +164,17 @@ function init_notif(){
 
 
 
-
 function assign(t,n,t1,f){
     switch(t){
         case 'sign':{
             n == 1 ? 
-                validateEmail($i('sign-mail').value) && $i('sign-u-name').classList.contains('in-success') ?
+                validateEmail($i('sign-mail').value)?
                     slide(n,t1)
                 :1
             : 1; 
             n == 2 ? 
-                $i('sign-pass').value.length > 5 && $i('sign-place').value.length >0  && $i('sign-phone').value.length >0 ?
-                    slide(n,t1)
+                $i('sign-pass').value.length > 5 && $i('sign-uni').value.length >0  && $i('sign-phone').value.length >0?
+                    sign('up')
                 : 1 
             : 1; 
             break;
@@ -279,7 +278,9 @@ function sign(t){
             var email = $i('sign-mail').value,
             pass = $i('sign-pass').value,
             name = $i('sign-f-name').value + ' ' + $i('sign-l-name').value,
-            uName = $i('sign-u-name').value;
+            // uName = $i('sign-u-name').value,
+            uni = $i('sign-uni').value,
+            pho = $i('sign-phone').value;
             firebase.auth().createUserWithEmailAndPassword(email,pass).then(()=>{
                 firebase.auth().currentUser.updateProfile({
                     displayName:name
@@ -287,10 +288,14 @@ function sign(t){
                 ref.child('users/'+firebase.auth().currentUser.uid).set({
                     name:name,
                     email:email,
-                    userName:uName
+                    // userName:uName,
+                    university:uni,
+                    phone:pho
                 });
-            }).catch(function(err){
-                cl(err.message)
+                slide(2,'slide1')
+            }).catch(err=>{
+                $i('sign-err').innerHTML = err.message;
+                slide(0,'slide1')
             });
             break;
         };
