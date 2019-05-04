@@ -55,7 +55,7 @@ var fire = {
                 $i('username').innerHTML = user.name;
 
                 //book shelf page fill
-                if(booksJs != 0)
+                if(booksJs != 0 && document.body.getAttribute('data-page') == "book-shelf")
                     bookInit('shelf');
 
                 if(document.body.classList.contains('home-p'))

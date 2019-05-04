@@ -85,6 +85,7 @@ function page_title_active(){
     }
 }
 
+//add a book request to the transactions parent
 function req(e){
     if(e.getAttribute('data-book') != undefined){
         ref.child('transactions').push().set({
@@ -99,8 +100,10 @@ function req(e){
     }
 }
 
+//adding elements to transactions and notification list
 function init_notif(){
     if(user){
+        //retrieving the requests of the user
         ref.child('transactions').orderByChild('requester').equalTo(user.id).once('value',m=>{
             if(m.exists()) 
                 m.forEach(d=>{
@@ -112,14 +115,23 @@ function init_notif(){
                     ref.child('users/'+d.val().owner).once('value',n=>{
                         ref.child('books/'+d.val().book).once('value',o=>{
                             p.appendChild(document.createTextNode('You requested \''+o.val().title + '\' From ' + n.val().name))
-                            $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
+
+                            //if the transaction is not accepted yet
+                            if(d.val().status == 1)
+                                $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
+                            //retrieving the successful requests
                             ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
-                                p1.appendChild(document.createElement('br'))
-                                p1.appendChild(document.createElement('br'))
-                                
-                                p1.appendChild(document.createTextNode(n.val().name + ' accepted your request for ' + o.val().title + ', And you can chat now from the chat list'))
-                                $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
+                                if(q.exists()){
+                                    p1.appendChild(document.createTextNode(n.val().name + ' accepted your request for ' + o.val().title + ', And you can chat now from the chat list'))
+                                    p1.appendChild(document.createElement('br'))
+                                    p1.appendChild(document.createElement('br'))
+
+                                    $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
+                                    
+                                    chatPop_add(d,n,o)
+                                }
                             })
+                            
                         })
                     })
                 })
@@ -135,33 +147,50 @@ function init_notif(){
 
                     ref.child('users/'+d.val().requester).once('value',n=>{
                         ref.child('books/'+d.val().book).once('value',o=>{
+
+                            ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
+                                if(q.exists()){
+                                    chatPop_add(d,n,o)
+                                }
+                            })
+
                             p.appendChild(document.createTextNode(n.val().name + ' requested \''+o.val().title + '\' From you '))
                             p.appendChild(button)
                             button.innerHTML = 'Accept'
                             button.onclick = ()=>{
                                 ref.child('transactions/'+d.key).update({status:'2'}).then(()=>{
-                                    ref.child('chats').update({
-                                        [user.id]:[d.val().requester]
+                                    var dat = new Date();
+                                    dat = dat.customFormat("#DD#/#MM#/#YYYY# #hh#:#mm#")
+                                    ref.child('chats/'+d.key).push({
+                                        mess:'',
+                                        date:dat,
+                                        user:''
                                     })
+
+                                    chatPop_add(d,n,o)
                                 })
-                                ref.child('notifications').push().set({trans:m.key,status:'accpted'})
+                                ref.child('notifications').push().set({trans:d.key,status:'accpted'})
                             }
-                            $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
+
+                            if(d.val().status == "1")
+                                $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
                         })
                     })
                 })
         })
 
-        ref.child('chats/'+user.id).once('value',m=>{
-            cl(m.val())
-            m.forEach(d=>{
-                cl(d.val())
-            })
-        })
 
     }
 }
 
+
+function chatPop_add(d,n,o){
+    var chat_head = document.createElement('div')
+    chat_head.setAttribute('data-trans',d.key)
+    chat_head.onclick = ()=> chat('open',chat_head)
+    chat_head.innerHTML = "Chat with "+n.val().name + " about "+o.val().title + "<br><br>"
+    $i('people').children[1].children[0].insertAdjacentElement('afterbegin',chat_head)
+}
 
 
 function assign(t,n,t1,f){
@@ -215,7 +244,7 @@ function assign(t,n,t1,f){
 
 function search(n,t = ''){
     cl('aasd')
-    n.parentElement.children[1].children[0].innerHTML ='';
+    // n.parentElement.children[1].children[0].innerHTML ='';
     if(t == 'main'){
         firebase.database().ref('users/').orderByChild('title').equalTo(n.value).once('value').then(m=>{
             if(m.val() != null){
@@ -228,6 +257,35 @@ function search(n,t = ''){
                 n.classList.add('in-success');
             }
         })
+    }
+    if(t=='search'){
+        if(n.length > 2){
+            
+            var len=false,ti=0, int = setInterval(function(){
+                n == undefined ? clearInterval(int) : 1;
+                if(len == false)
+                    len = n.length;
+                if(len != false){
+                    if(n.length == len){
+                        if(ti == 10){
+                            clearInterval(int); 
+                            ti=0;
+                            len = false;
+                            cl('search after sec of stopping typing') 
+                            searchBy('title',n)
+                            searchBy('author',n)
+                            searchBy('tags',n)
+                        }
+                        ti++;
+                    }
+                    else{
+                        len = false;
+                        ti = 0;
+                    }
+                }
+            },100);
+            
+        }
     }
     else {
         var xml = new XMLHttpRequest;
@@ -253,6 +311,37 @@ function search(n,t = ''){
     }
 
   
+}
+
+function searchBy(t,v){
+    ref.child('books').orderByChild(t).equalTo(v).once('value',m=>{
+        //append an absolute select element
+        $i('s-res-'+t).innerHTML = ''
+
+        m.forEach(d=>{
+            let v = d.val()
+            bookInfo = d;
+            var arr = {
+                im:'',
+                title:v.title,
+                author:v.author,
+                isbn:v.isbn,
+                tags:v.tags,
+                swap:v.swap,
+                swapStars:v.swapStars,
+                lend:v.lend,
+                lendPrice:v.lendPrice,
+                lendPoints:v.lendPoints,
+                sell:v.sell,
+                sellPrice:v.sellPrice,
+                gov:v.gov,
+                area:v.area,
+                user:v.userId,
+                id:d.key
+            }
+            book(arr,$i('s-res-'+t),'select')
+        })
+    })
 }
 
 function fireCheck(n){
@@ -316,238 +405,6 @@ function sign(t){
 
 
 
-var key='0';
-function bookInit(t){
-    if(user != null){
-        switch(t){
-            case 'shelf':{
-                ref.child('books/').once('value',m=>{
-                    if(m.exists()){
-                        m.forEach(d=>{
-                            if(d.val().userId == user.id){
-                                let v = d.val()
-                                var arr = {
-                                    im:'',
-                                    title:v.title,
-                                    author:v.author,
-                                    isbn:v.isbn,
-                                    tags:v.tags,
-                                    id:d.key
-                                }
-                                book(arr,$i('bcontainer'))
-                            }
-                            key = m.key
-                        })
-                    }
-                ref.child('books/').startAt(key).on('value',m=>{
-                    if(m.exists()){
-                        // m.forEach(d=>{
-                            if(m.val().userId == user.id){
-                                let v = m.val()
-                                var arr = {
-                                    im:'',
-                                    title:v.title,
-                                    author:v.author,
-                                    isbn:v.isbn,
-                                    tags:v.tags,
-                                    id:m.key
-                                }
-                                book(arr,$i('bcontainer'))
-                            }
-                        // })
-                    }
-                })
-                })
-                break;
-            }
-            case 'home':{
-                ref.child('books/').orderByKey().once('value',m=>{
-                    cl('home books')
-                    if(m.exists()){
-                        m.forEach(d=>{
-                            if(d.val().userId != user.id){
-                                let v = d.val()
-                                bookInfo = d;
-                                var arr = {
-                                    im:'',
-                                    title:v.title,
-                                    author:v.author,
-                                    isbn:v.isbn,
-                                    tags:v.tags,
-                                    swap:v.swap,
-                                    swapStars:v.swapStars,
-                                    lend:v.lend,
-                                    lendPrice:v.lendPrice,
-                                    lendPoints:v.lendPoints,
-                                    sell:v.sell,
-                                    sellPrice:v.sellPrice,
-                                    gov:v.gov,
-                                    area:v.area,
-                                    user:v.userId,
-                                    id:d.key
-                                }
-                                book(arr,$i('bcontainer'))
-                            }
-                        })
-                    }
-                })
-                break;
-            }
-            default:cl('def');break;
-        }
-        
-    }
-}
-
-//create the book html element and append it to the parent
-function book(arr,i){
-	var img = document.createElement('img'),
-	bElem = document.createElement('div'),
-	cont = document.createElement('div'),
-	p = document.createElement('p'),
-	p1 = document.createElement('p'),
-	h1 = document.createElement('p'),
-	tag = document.createElement('p'),
-    userCont = document.createElement('div'),
-    userName = document.createElement('h1'),
-    gover = document.createElement('p'),
-    areaa = document.createElement('p');
-	
-	bElem.classList.add('book');
-	tag.classList.add('b-tag');
-
-    firebase.storage().ref().child('images/'+arr.title).getDownloadURL().then(I=>{
-        img.src = I
-    });
-
-    
-
-    p1.innerHTML = arr.isbn;p1.title = arr.isbn
-	h1.innerHTML = arr.title;h1.title = arr.title
-	p.innerHTML = arr.author;p.title = arr.author
-	tag.innerHTML = arr.tags;tag.title = arr.tags
-    
-
-
-	cont.appendChild(p1)
-	cont.appendChild(h1)
-	cont.appendChild(p)
-	cont.appendChild(tag)
-
-    
-
-
-	bElem.appendChild(img)
-	bElem.appendChild(cont)
-
-    if(i.classList.contains('home-p')){
-        ref.child('users/'+arr.user).once('value',m=>{
-            userName.innerHTML = userName.title = m.val().name
-        })
-
-        userCont.appendChild(userName)
-        userCont.appendChild(gover)
-        userCont.appendChild(areaa)
-
-        gover.innerHTML = arr.gov;gover.title = arr.gov
-        areaa.innerHTML = arr.area;areaa.title = arr.area
-
-        bElem.appendChild(userCont)
-    }
-    
-    if(i)
-        if(i.parentElement.parentElement.getAttribute('data-type') == 'pop' || i.getAttribute('id') == 'bookAdd'){
-            let dWrap = document.createElement('div')
-            dWrap.style.cursor = 'crosshair'
-            dWrap.onclick = ()=>{
-                $i('bookAdd').innerHTML = ''
-                $i('bookAdd').appendChild(bElem.cloneNode(true))
-                slide(2,'slide2')
-            }
-            dWrap.appendChild(bElem)
-            $i('bookId').value = arr.key
-            i.insertAdjacentElement('afterbegin',dWrap)
-        }
-        if(i.classList.contains('home-p')){
-            var pc1 = document.createElement('h1'),
-            div = document.createElement('div'),
-            pc2 = document.createElement('h1'),
-            pc3 = document.createElement('h1'),
-            pc = document.createElement('p')
-        
-            pc.innerHTML = 'Available for: ';
-        	div.appendChild(pc)
-            if(arr.lend){
-                pc1.innerHTML += 'Borrow (For: ' + arr.lendPrice + ' L.E)'
-                div.appendChild(pc1)
-            }
-            if(arr.swap){
-                pc2.innerHTML += 'Swap (With: ' + arr.swapStars + ' Book/s)'
-                div.appendChild(pc2)
-            }
-            if(arr.sell){
-                pc3.innerHTML += 'Buy (For: ' + arr.sellPrice + ' L.E)'
-                div.appendChild(pc3)
-            }
-            var bu = document.createElement('button');
-            bu.onmouseover=()=>{on=true}
-            bu.onmouseout=()=>{on=false}
-
-            bu.innerHTML = 'Request';
-            
-            div.appendChild(bu)
-            bElem.appendChild(div)
-           /////////////////////////////////////////////////////////
-            bu.onclick = ()=>{
-                $i('init-req').children[0].innerHTML = ''
-                $i('req-sel').innerHTML = ''
-
-                var op = document.createElement('option'),
-                bElem2 = bElem.cloneNode(true)
-                bElem2.children[3].remove()
-
-                $i('init-req').children[0].insertAdjacentElement('afterbegin',bElem2)
-
-                if(arr.lend){
-                    op.innerHTML = ''
-                    op.appendChild(document.createTextNode(pc1.innerHTML))
-                    op.value = 'lend,'+arr.lendPrice
-                    $i('req-sel').appendChild(op.cloneNode(true))
-                }
-                
-                if(arr.swap){
-                    op.innerHTML = ''
-                    op.appendChild(document.createTextNode(pc2.innerHTML))
-                    op.value = 'swap,'+arr.swapStars
-                    $i('req-sel').appendChild(op.cloneNode(true))
-                }
-
-                if(arr.sell){
-                    op.innerHTML = ''
-                    op.appendChild(document.createTextNode(pc3.innerHTML))
-                    op.value = 'sell,'+arr.sellPrice
-                    $i('req-sel').appendChild(op.cloneNode(true))
-                }
-                if($i('req-send') != undefined){
-                    $i('req-send').setAttribute('data-book',arr.id)
-                    $i('req-send').setAttribute('data-owner',arr.user)
-                }
-                
-                toggleId('gray-back-request')
-                /*
-                function(){
-                    toggleId('gray-back-request)
-                }
-                */
-            }
-            ///////////////////////////////////////////////////////////////
-            i.insertAdjacentElement('afterbegin',bElem)
-        }
-        else 
-            i.insertAdjacentElement('afterbegin',bElem)
-
-}
-
 Date.prototype.customFormat = function(formatString){
   var YYYY,YY,MMMM,MMM,MM,M,DDDD,DDD,DD,D,hhhh,hhh,hh,h,mm,m,ss,s,ampm,AMPM,dMod,th;
   YY = ((YYYY=this.getFullYear())+"").slice(-2);
@@ -566,5 +423,105 @@ Date.prototype.customFormat = function(formatString){
   mm=(m=this.getMinutes())<10?('0'+m):m;
   ss=(s=this.getSeconds())<10?('0'+s):s;
   return formatString.replace("#hhhh#",hhhh).replace("#hhh#",hhh).replace("#hh#",hh).replace("#h#",h).replace("#mm#",mm).replace("#m#",m).replace("#ss#",ss).replace("#s#",s).replace("#ampm#",ampm).replace("#AMPM#",AMPM);
-}//# DD#/#MM#/#YYYY# #hh#:#mm#:#ss#
+}//#DD#/#MM#/#YYYY# #hh#:#mm#:#ss#
 
+var mess_cache;
+function chat(t,e=document.body){
+    switch(t){
+        case "open":{
+            if($c('chat-pop')[0])
+                $c('chat-pop')[0].remove()
+            var chatPop = document.createElement('div'),
+            chatHeader = document.createElement('div'),
+            chatClose = document.createElement('button'),
+            chatBody = document.createElement('div'),
+            chatFooter = document.createElement('form'),
+            chatMess = document.createElement('input'),
+            chatSend = document.createElement('input')
+            
+            chatPop.classList.add('chat-pop')
+            chatHeader.classList.add('chat-header')
+            chatBody.classList.add('chat-body')
+            chatFooter.classList.add('chat-footer')
+            chatMess.classList.add('chat-message')
+            chatSend.classList.add('chat-send')
+
+            chatMess.setAttribute('data-trans',e.getAttribute('data-trans'))
+
+            chatMess.type = 'text'
+            chatSend.type = 'submit'
+
+            chatFooter.onsubmit = ()=>{chat('send',chatMess);return false}
+
+            ref.child('transactions/'+e.getAttribute('data-trans')).once('value',m=>{
+                ref.child('users/'+m.val().owner).once('value',n=>{
+                    chatHeader.innerHTML += n.val().name
+                }).then(()=>{
+                    chatHeader.appendChild(chatClose)
+                })
+                ref.child('books/'+m.val().book).once('value',n=>{
+                    chatHeader.innerHTML += '<br>Book title: '+n.val().title
+                })
+            })            
+
+            chatPop.appendChild(chatHeader)
+            chatPop.appendChild(chatBody)
+            chatFooter.appendChild(chatMess)
+            chatFooter.appendChild(chatSend)
+            chatPop.appendChild(chatFooter)
+
+            document.body.appendChild(chatPop)
+
+            chatClose.appendChild(document.createTextNode('X'))
+            chatClose.style.float = 'right'
+            chatClose.style.margin = '0.5rem'
+            chatClose.setAttribute('onclick','$c(\'chat-pop\')[0].remove()')
+
+            chat('init',chatBody)
+
+            break
+        }
+        case "send":{
+            if(e.value.length > 0){
+                var mess = e.value
+                e.value = ''
+                var dat = new Date();
+                dat = dat.customFormat("#DD#/#MM#/#YYYY# #hh#:#mm#")
+                ref.child('chats/'+e.getAttribute('data-trans')+'messages').push({
+                    mess:mess,
+                    date:dat,
+                    user:user.id
+                })
+            }
+            break
+        }
+        case 'init':{
+            var trans = e.parentElement.children[2].children[0].getAttribute('data-trans')
+            cl(trans)
+            ref.child('chats/'+trans+'messages').on('child_added',m=>{mess_cache = m;chat('dis-mess',e)})
+            // ref.child('chats/'+trans+'messages').on('value',m=>{mess_cache = m;chat('dis-mess',e)})
+            break
+        }
+        case 'dis-mess':{
+            var mess = document.createElement('div'),
+            p = document.createElement('p'),
+            date = document.createElement('p')
+            
+            p.innerHTML = mess_cache.val().mess
+            date.innerHTML = mess_cache.val().date
+
+            date.style.fontSize = '0.5rem'
+            
+            mess.classList.add('chat-mess')
+            if(mess_cache.val().user == user.id)
+                mess.classList.add('mess-same')
+            
+            mess.appendChild(p)
+            e.appendChild(date)
+            e.appendChild(mess)
+            mess.scrollIntoView()
+            break
+        }
+        default:break;
+    }
+}

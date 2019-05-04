@@ -36,7 +36,7 @@
                 </div>
                 
                 <div class="AA body-info" style="margin-left:9vh;vertical-align: middle;">
-                    <a href="#" style="text-decoration:none;" class="body-info"><p style="border:1px solid brown;border-radius:5px;font-size:20px; padding:1vh 0;background-color:#f4973a;color:white;" class="body-info"><b class="body-info">Explore the web version!</b></p></a>
+                    <a href="./home.html" style="text-decoration:none;" class="body-info"><p style="border:1px solid brown;border-radius:5px;font-size:20px; padding:1vh 0;background-color:#f4973a;color:white;" class="body-info"><b class="body-info">Explore the web version!</b></p></a>
                     <a class="downloads" href="#" class="body-info"><img  class="f-l-s" src="imgs/01-Download_Google_Play.png"style="width:130px;" /></a>
                     <hr width="1" style="margin:auto 2vw;height:5vh;display:inline-block;">
                     <a class="downloads" href="#" class="body-info"><img  class="f-l-s" src="imgs/01-Download_App_Store.png" style="width:130px;" /></a>
@@ -45,6 +45,7 @@
             
                 <div class="body-info">
                     <h1 class="body-info">What?</h1>
+                    <img src="./imgs/what.png" alt="">
                     <p  class="body-info">
                         <span class="body-info" style="font-family:forte">
                             <I class="body-info">Bookstation</I>
@@ -53,8 +54,11 @@
                         diiferent ways , each user can borrow , swap or even buy the book he wants from other users , libraries 
                     are awesome , and that's why we decide to combine all the books users own into a one huge library!</p>
                 </div>
+                <hr class="body-info"/>
+
                 <div class="body-info">
                     <h1 class="body-info">Why?</h1>
+                    <img src="./imgs/why.png" alt="">
                     <p  class="body-info">
                         We believe that anyone should be able to read the books he wants whenever he wants and wherever he
                         wants, and we also believe in authors ' and publishers' rights, so we figure that there must be a 
@@ -63,8 +67,11 @@
                         we are trying to create THE ulitmate library, from the readers and to the readers!
                     </p>
                 </div>
+                <hr class="body-info"/>
+
                 <div class="body-info">
                     <h1 class="body-info">How?</h1>
+                    <img src="./imgs/how.png" alt="">
                     <p class="body-info">
                         All you have to do is to create an account(you can easily register using your Google account),list the
                         books you own and their availability (for lend, swap... etc)and start searching and exploring all the 
@@ -117,7 +124,9 @@
 			};
 			firebase.initializeApp(config);  
 		</script>
-		<script src='./js/js.js'></script>
+        <script src='./js/js.js'></script>
+		<script src="../js/books.js"></script>
+        
         <script>var dir = './';
             // firebase.auth().onAuthStateChanged(u=>{
             //     if(u){
