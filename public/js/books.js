@@ -35,7 +35,7 @@ function bookInit(t){
 								ref.child('transactions').orderByChild('book').equalTo(d.key).once('value',n=>{
 									var exis = true
 									n.forEach(e=>{
-										if(e.exists() && e.val().requester == user.id){
+										if(e.exists()){
 											exis *= false
 										}
 									})

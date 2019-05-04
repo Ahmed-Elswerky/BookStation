@@ -271,12 +271,12 @@ nav ul .active a{
 nav .sign-btn{
 	background: #F4973A;
 	color:white;
-	border:1.5px solid #AE6E2E;
+	border:1px solid #F4973A;
 }
 nav .log-btn{
 	background:white;
 	color:#F4973A;
-	border:1.5px solid #AE6E2E;
+	border:1px solid #AE6E2E;
 }
 nav #lang img{
 	width:2vw;
