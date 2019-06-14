@@ -992,3 +992,32 @@ footer center div a img:hover{
 footer p img{
 	vertical-align: middle;
 }
+
+@media only screen and (max-width: 750px) {
+  .btn{
+  	padding:0 3vw;
+  	margin:0.5vh;
+  }
+  #cross-icon{
+  	float:unset !important;
+  }
+  #home-int{
+    margin: auto !important;
+  }
+  #home-int div{
+  	max-width: initial;
+  }
+  #platforms-div{
+  	margin:auto !important;
+  }
+  footer center.body-info div p{
+  	display: none;
+  }
+  #socials{
+  	display: none;
+  }
+  #george{
+  	padding-right:0 !important;
+  }
+
+}

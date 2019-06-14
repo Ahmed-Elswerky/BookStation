@@ -10,6 +10,10 @@ function cl(m){
     console.log(m);
 }
 
+function dc(m){
+    return document.createElement(m)
+}
+
 function toggleId(d){
     // document.body.style.overflow = 'hidden'
     if($i(d) != undefined){
@@ -96,8 +100,8 @@ function req(e){
             owner:e.getAttribute('data-owner'),
             status:'1'
         })
-        hide('gray-back-request','i')
-    }
+`        hide('gray-back-request','i')
+`    }
 }
 
 //adding elements to transactions and notification list
@@ -107,10 +111,10 @@ function init_notif(){
         ref.child('transactions').orderByChild('requester').equalTo(user.id).once('value',m=>{
             if(m.exists()) 
                 m.forEach(d=>{
-                    var p = document.createElement('p'),
-                    p1 = document.createElement('p')
+                    var p = dc('p'),
+                    p1 = dc('p')
 
-                    p.appendChild(document.createElement('br'))
+                    p.appendChild(dc('br'))
 
                     ref.child('users/'+d.val().owner).once('value',n=>{
                         ref.child('books/'+d.val().book).once('value',o=>{
@@ -123,8 +127,8 @@ function init_notif(){
                             ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
                                 if(q.exists()){
                                     p1.appendChild(document.createTextNode(n.val().name + ' accepted your request for ' + o.val().title + ', And you can chat now from the chat list'))
-                                    p1.appendChild(document.createElement('br'))
-                                    p1.appendChild(document.createElement('br'))
+                                    p1.appendChild(dc('br'))
+                                    p1.appendChild(dc('br'))
 
                                     $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
                                     
@@ -140,10 +144,10 @@ function init_notif(){
         ref.child('transactions').orderByChild('owner').equalTo(user.id).once('value',m=>{
             if(m.exists()) 
                 m.forEach(d=>{
-                    var p = document.createElement('p'),
-                    button = document.createElement('button')
+                    var p = dc('p'),
+                    button = dc('button')
 
-                    p.appendChild(document.createElement('br'))
+                    p.appendChild(dc('br'))
 
                     ref.child('users/'+d.val().requester).once('value',n=>{
                         ref.child('books/'+d.val().book).once('value',o=>{
@@ -185,7 +189,7 @@ function init_notif(){
 
 
 function chatPop_add(d,n,o){
-    var chat_head = document.createElement('div')
+    var chat_head = dc('div')
     chat_head.setAttribute('data-trans',d.key)
     chat_head.onclick = ()=> chat('open',chat_head)
     chat_head.innerHTML = "Chat with "+n.val().name + " about "+o.val().title + "<br><br>"
@@ -260,7 +264,6 @@ function search(n,t = ''){
     }
     if(t=='search'){
         if(n.length > 2){
-            
             var len=false,ti=0, int = setInterval(function(){
                 n == undefined ? clearInterval(int) : 1;
                 if(len == false)
@@ -339,6 +342,7 @@ function searchBy(t,v){
                 user:v.userId,
                 id:d.key
             }
+            if(d.exists())
             book(arr,$i('s-res-'+t),'select')
         })
     })
@@ -431,13 +435,16 @@ function chat(t,e=document.body){
         case "open":{
             if($c('chat-pop')[0])
                 $c('chat-pop')[0].remove()
-            var chatPop = document.createElement('div'),
-            chatHeader = document.createElement('div'),
-            chatClose = document.createElement('button'),
-            chatBody = document.createElement('div'),
-            chatFooter = document.createElement('form'),
-            chatMess = document.createElement('input'),
-            chatSend = document.createElement('input')
+            var chatPop = dc('div'),
+            chatHeader = dc('div'),
+            chatCheck = dc('div'),
+            check1 = dc('input'),
+            check2 = dc('input'),
+            chatClose = dc('button'),
+            chatBody = dc('div'),
+            chatFooter = dc('form'),
+            chatMess = dc('input'),
+            chatSend = dc('input')
             
             chatPop.classList.add('chat-pop')
             chatHeader.classList.add('chat-header')
@@ -448,6 +455,8 @@ function chat(t,e=document.body){
 
             chatMess.setAttribute('data-trans',e.getAttribute('data-trans'))
 
+            check1.type = 'checkbox'
+            check2.type = 'checkbox'
             chatMess.type = 'text'
             chatSend.type = 'submit'
 
@@ -464,6 +473,9 @@ function chat(t,e=document.body){
                 })
             })            
 
+            chatCheck.appendChild(check1)
+            chatCheck.appendChild(check2)
+            chatHeader.appendChild(chatCheck)
             chatPop.appendChild(chatHeader)
             chatPop.appendChild(chatBody)
             chatFooter.appendChild(chatMess)
@@ -472,6 +484,8 @@ function chat(t,e=document.body){
 
             document.body.appendChild(chatPop)
 
+            chatCheck.style.float = 'left'
+            chatCheck.style.lineHeight = '7vh'
             chatClose.appendChild(document.createTextNode('X'))
             chatClose.style.float = 'right'
             chatClose.style.margin = '0.5rem'
@@ -503,9 +517,9 @@ function chat(t,e=document.body){
             break
         }
         case 'dis-mess':{
-            var mess = document.createElement('div'),
-            p = document.createElement('p'),
-            date = document.createElement('p')
+            var mess = dc('div'),
+            p = dc('p'),
+            date = dc('p')
             
             p.innerHTML = mess_cache.val().mess
             date.innerHTML = mess_cache.val().date

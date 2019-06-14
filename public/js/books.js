@@ -1,6 +1,16 @@
 
 booksJs = 1;
-
+var bookss;
+function readTextFile(){
+    var xml = new XMLHttpRequest
+    xml.onreadystatechange = ()=>{
+        if(this.status == 200 && this.readyState == 4){
+            bookss = JSON.parse(this.responseText)
+        }
+    }
+    xml.open('get','./books.json',true)
+    xml.send()
+}
 
 function bookInit(t){
     if(user != null){
@@ -141,17 +151,17 @@ function submitBookInfo(event){
 
 //create the book html element and append it to the parent
 function book(arr,i,t=''){
-	var img = document.createElement('img'),
-	bElem = document.createElement('div'),
-	cont = document.createElement('div'),
-	p = document.createElement('p'),
-	p1 = document.createElement('p'),
-	h1 = document.createElement('p'),
-	tag = document.createElement('p'),
-    userCont = document.createElement('div'),
-    userName = document.createElement('h1'),
-    gover = document.createElement('p'),
-    areaa = document.createElement('p');
+	var img = dc('img'),
+	bElem = dc('div'),
+	cont = dc('div'),
+	p = dc('p'),
+	p1 = dc('p'),
+	h1 = dc('p'),
+	tag = dc('p'),
+    userCont = dc('div'),
+    userName = dc('h1'),
+    gover = dc('p'),
+    areaa = dc('p');
 	
 	bElem.classList.add('book');
 	tag.classList.add('b-tag');
@@ -200,10 +210,10 @@ function book(arr,i,t=''){
 
         bElem.appendChild(userCont)
     }
-    
+    cl(i)
     if(i)
         if(i.parentElement.parentElement.getAttribute('data-type') == 'pop' || i.getAttribute('id') == 'bookAdd'){
-            let dWrap = document.createElement('div')
+            let dWrap = dc('div')
             dWrap.style.cursor = 'crosshair'
             dWrap.onclick = ()=>{
                 $i('bookAdd').innerHTML = ''
@@ -215,11 +225,11 @@ function book(arr,i,t=''){
             i.insertAdjacentElement('afterbegin',dWrap)
         }
         if(i.classList.contains('home-p')){
-            var pc1 = document.createElement('h1'),
-            div = document.createElement('div'),
-            pc2 = document.createElement('h1'),
-            pc3 = document.createElement('h1'),
-            pc = document.createElement('p')
+            var pc1 = dc('h1'),
+            div = dc('div'),
+            pc2 = dc('h1'),
+            pc3 = dc('h1'),
+            pc = dc('p')
         
             pc.innerHTML = 'Available for: ';
         	div.appendChild(pc)
@@ -235,7 +245,7 @@ function book(arr,i,t=''){
                 pc3.innerHTML += 'Buy (For: ' + arr.sellPrice + ' EGP)'
                 div.appendChild(pc3)
             }
-            var bu = document.createElement('button');
+            var bu = dc('button');
             bu.onmouseover=()=>{on=true}
             bu.onmouseout=()=>{on=false}
 
@@ -252,7 +262,7 @@ function book(arr,i,t=''){
                 $i('init-req').children[0].innerHTML = ''
                 $i('req-sel').innerHTML = ''
 
-                var op = document.createElement('option'),
+                var op = dc('option'),
                 bElem2 = bElem.cloneNode(true)
                 bElem2.children[3].remove()
 
@@ -294,7 +304,7 @@ function book(arr,i,t=''){
             i.insertAdjacentElement('afterbegin',bElem)
         }
         if(t == 'select'){
-            // var opt = document.createElement('option')
+            // var opt = dc('option')
             // opt.appendChild(cont)
             userCont.innerHTML = ''
             i.insertAdjacentElement('afterbegin',bElem)
@@ -307,7 +317,7 @@ function book(arr,i,t=''){
 
 //dispaly the blob of an uploaded image
 function displayImage(e){
-	var im = document.createElement('img')
+	var im = dc('img')
 	im.setAttribute('src',URL.createObjectURL(e.files[0]))
 	im.style.width = '50px'
 	im.setAttribute('id','u-img')

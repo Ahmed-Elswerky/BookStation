@@ -12,7 +12,7 @@
 <!-- assign('',this,'main',search) -->
     <li id="search">
         <div id="search" class="dropIcon-cont">
-            <input type="search" class="dropIcon hoverShade" placeholder="Search by name" onchange="search(this.value,'search')" autocomplete="off">
+            <input type="search" class="dropIcon hoverShade" placeholder="Search by name" oninput="search(this.value,'search');cl('searching')" autocomplete="off">
             <div class="dropDown">
                 <div class="dropContain shadow" data-type='search'>
                     <input type="radio" class="s-radio" name="s-resu" id="s-radio-t" checked>
