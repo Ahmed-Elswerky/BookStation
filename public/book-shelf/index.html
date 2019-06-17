@@ -28,9 +28,10 @@
 			})();
 			</script>
 			<gcse:search></gcse:search>--->
-			<button onclick="toggleId('gray-back-add-book')" onmouseover="on=true"  onmouseout="on=false">add</button>
+			<button onclick="toggleId('gray-back-add-book');slide(0,'slide2')" onmouseover="on=true"  onmouseout="on=false">add</button>
 		    <div class="gray-back hidable hide" id="gray-back-add-book">
-				<div class="pop" onmouseover="on=true" onmouseout="on=false">
+                <div class="pop" onmouseover="on=true" onmouseout="on=false">
+                    <div id="add-book-error" style="color:rgb(230, 94, 94);padding-top:0.5vw"></div>
 					<div class="slide-cont">
 
 						<div id="slide1" class="slide2 slide ">
@@ -52,7 +53,10 @@
 							<div class="greeting">
 								<h1>Add a book</h1>
 								<form action="" onsubmit="submitBook(event)">
-									<input type="file" name="" id="file" onchange="displayImage(this)">
+                                        <div class="inp-cont">
+                                                <input type="file" name="" id="file" onchange="displayImage(this)">
+										<label for="title">Book Cover</label>
+									</div>
 									<div class="inp-cont">
 										<input type="text" id="title" required>
 										<label for="title">Book title</label>
@@ -62,11 +66,11 @@
 										<label for="author">Author name</label>
 									</div>
 									<div class="inp-cont">
-										<input type="number" id="isbn" required>
+										<input type="number" id="isbn">
 										<label for="isbn">ISBN Num.</label>
 									</div>
 									<div class="inp-cont">
-										<input type="text" id="tags" required>
+										<input type="text" id="tags">
 										<label for="tags">Tags<small>(genres)</small></label>
 									</div>
 									<button class="btn">Submit</button>

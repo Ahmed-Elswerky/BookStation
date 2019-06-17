@@ -6,26 +6,30 @@
     </li>
     <li class=" in ">
         <a id="home-p" class="menu-link f-l-h" href="./home.html">Home</a>
-        <a id="book-shelf" class="menu-link f-l-h" href="./book-shelf">Book Shelf</a>
-        <a id="transactions" class="menu-link f-l-h" href="./Transactions">Transactions</a>
+        <a id="book-shelf" class="menu-link f-l-h" href="../book-shelf">Book Shelf</a>
     </li>
-<!-- assign('',this,'main',search) -->
     <li id="search">
         <div id="search" class="dropIcon-cont">
-            <input type="search" class="dropIcon hoverShade" placeholder="Search by name" oninput="search(this.value,'search');cl('searching')" autocomplete="off">
+            <input type="search" class="dropIcon hoverShade" placeholder="Search by name" oninput="search(this,'search');cl('searching')" autocomplete="off">
             <div class="dropDown">
                 <div class="dropContain shadow" data-type='search'>
                     <input type="radio" class="s-radio" name="s-resu" id="s-radio-t" checked>
+                    <div class="s-res" id="s-res-title" autofocus>
+                        No results Yet
+                    </div>
                     <label for="s-radio-t">By title</label>
-                    <div class="s-res" id="s-res-title" autofocus></div>
 
                     <input type="radio" class="s-radio" name="s-resu" id="s-radio-a">
+                    <div class="s-res" id="s-res-author">
+                        No results Yet
+                    </div>
                     <label for="s-radio-a">By author</label>
-                    <div class="s-res" id="s-res-author"></div>
 
                     <input type="radio" class="s-radio" name="s-resu" id="s-radio-g">
+                    <div class="s-res" id="s-res-tags">
+                        No results Yet
+                    </div>
                     <label for="s-radio-g">By Tags</label>
-                    <div class="s-res" id="s-res-tags"></div>
 
                 </div>
             </div>

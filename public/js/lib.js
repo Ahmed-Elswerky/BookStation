@@ -42,8 +42,6 @@ function hide(t,k){
                 $c(t)[i].classList.add('hide');
             if($c(t)[i].classList.contains('show'))
                 $c(t)[i].classList.remove('show');
-            // cl($c(t)[i]);
-            // cl(new Error().stack.split('\n')[1])
         }
 
     if(k == 'i' && $i(t))
@@ -60,7 +58,6 @@ function remove(t){
 }    
 
 function pLoad(p,i,f){
-    cl(p)
     var xml = new XMLHttpRequest;
     xml.onreadystatechange = function(){
         if(this.status == 200 && this.readyState == 4)
@@ -100,17 +97,18 @@ function req(e){
             owner:e.getAttribute('data-owner'),
             status:'1'
         })
-`        hide('gray-back-request','i')
-`    }
+        hide('gray-back-request','i')
+    }
 }
 
 //adding elements to transactions and notification list
 function init_notif(){
     if(user){
         //retrieving the requests of the user
-        ref.child('transactions').orderByChild('requester').equalTo(user.id).once('value',m=>{
-            if(m.exists()) 
-                m.forEach(d=>{
+        ref.child('transactions').on('child_added',d=>{
+            // if(m.exists()) 
+            if(d.val().requester == user.id){
+                // m.forEach(d=>{
                     var p = dc('p'),
                     p1 = dc('p')
 
@@ -118,34 +116,48 @@ function init_notif(){
 
                     ref.child('users/'+d.val().owner).once('value',n=>{
                         ref.child('books/'+d.val().book).once('value',o=>{
-                            p.appendChild(document.createTextNode('You requested \''+o.val().title + '\' From ' + n.val().name))
+                            p.appendChild(document.createTextNode('Request for \''+o.val().title + '\' sent to ' + n.val().name))
 
                             //if the transaction is not accepted yet
-                            if(d.val().status == 1)
+                            if(d.val().status == 1){
                                 $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
-                            //retrieving the successful requests
-                            ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
-                                if(q.exists()){
-                                    p1.appendChild(document.createTextNode(n.val().name + ' accepted your request for ' + o.val().title + ', And you can chat now from the chat list'))
-                                    p1.appendChild(dc('br'))
-                                    p1.appendChild(dc('br'))
-
-                                    $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
-                                    
-                                    chatPop_add(d,n,o)
-                                }
-                            })
+                            }
+                            else{
+                                //retrieving the successful requests
+                                ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
+                                    if(q.exists()){
+                                        q.forEach(z=>{
+                                            if(z.val().status == 'accepted'){
+                                                p1.appendChild(document.createTextNode(n.val().name + ' accepted request for ' + o.val().title + ', chat now'))
+                                                p1.appendChild(dc('br'))
+                                                p1.appendChild(dc('br'))
+    
+                                                $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
+                                                
+                                                chatPop_add(d,n,o)
+                                            }
+                                            if(z.val().status == 'declined'){
+                                                p1.appendChild(document.createTextNode(n.val().name + ' declined request for ' + o.val().title))
+                                                p1.appendChild(dc('br'))
+                                                p1.appendChild(dc('br'))
+    
+                                                $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
+                                            }
+                                        })
+                                    }
+                                })
+                            }
                             
                         })
                     })
-                })
-        })
-
-        ref.child('transactions').orderByChild('owner').equalTo(user.id).once('value',m=>{
-            if(m.exists()) 
-                m.forEach(d=>{
+                // })
+            }
+             // if(m.exists()) 
+             if(d.val().owner == user.id){
+                // m.forEach(d=>{
                     var p = dc('p'),
-                    button = dc('button')
+                    button = dc('button'),
+                    button1 = dc('button')
 
                     p.appendChild(dc('br'))
 
@@ -154,11 +166,21 @@ function init_notif(){
 
                             ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
                                 if(q.exists()){
-                                    chatPop_add(d,n,o)
+                                    if(q.val().status == 'accepted')
+                                        chatPop_add(d,n,o)
                                 }
                             })
 
                             p.appendChild(document.createTextNode(n.val().name + ' requested \''+o.val().title + '\' From you '))
+                            p.appendChild(button1)
+                            button1.innerHTML = 'Decline'
+                            button1.onclick = ()=>{
+                                ref.child('transactions/'+d.key).update({status:'-1'})
+                                ref.child('notifications').push().set({trans:d.key,status:'declined'}).then(()=>{
+                                    p.remove()
+                                })
+                            }
+
                             p.appendChild(button)
                             button.innerHTML = 'Accept'
                             button.onclick = ()=>{
@@ -173,16 +195,18 @@ function init_notif(){
 
                                     chatPop_add(d,n,o)
                                 })
-                                ref.child('notifications').push().set({trans:d.key,status:'accpted'})
+                                ref.child('notifications').push().set({trans:d.key,status:'accepted'}).then(()=>{
+                                    p.remove()
+                                })
                             }
 
                             if(d.val().status == "1")
                                 $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
                         })
                     })
-                })
+                // })
+                }
         })
-
 
     }
 }
@@ -247,15 +271,13 @@ function assign(t,n,t1,f){
 }
 
 function search(n,t = ''){
-    cl('aasd')
-    // n.parentElement.children[1].children[0].innerHTML ='';
     if(t == 'main'){
         firebase.database().ref('users/').orderByChild('title').equalTo(n.value).once('value').then(m=>{
             if(m.val() != null){
                 // $i(n.innerText = n.getAttribute('data-type')+'is taken';
                 n.classList.add('danger');
                 if(n.classList.contains('in-success'))
-                    n.classList.remove('in-success');
+                n.classList.remove('in-success');
             }    
             else {
                 n.classList.add('in-success');
@@ -263,31 +285,16 @@ function search(n,t = ''){
         })
     }
     if(t=='search'){
-        if(n.length > 2){
-            var len=false,ti=0, int = setInterval(function(){
-                n == undefined ? clearInterval(int) : 1;
-                if(len == false)
-                    len = n.length;
-                if(len != false){
-                    if(n.length == len){
-                        if(ti == 10){
-                            clearInterval(int); 
-                            ti=0;
-                            len = false;
-                            cl('search after sec of stopping typing') 
-                            searchBy('title',n)
-                            searchBy('author',n)
-                            searchBy('tags',n)
-                        }
-                        ti++;
-                    }
-                    else{
-                        len = false;
-                        ti = 0;
-                    }
-                }
-            },100);
-            
+        if(n.value.length > 2){
+            $i('s-res-title').innerHTML = ''
+            $i('s-res-author').innerHTML = ''
+            $i('s-res-tags').innerHTML = ''
+            searchBy('title',n.value)
+            searchBy('title',n.value.charAt(0).toUpperCase()+n.value.slice(1))
+            searchBy('author',n.value)
+            searchBy('author',n.value.charAt(0).toUpperCase()+n.value.slice(1))
+            searchBy('tags',n.value)
+            searchBy('tags',n.value.charAt(0).toUpperCase()+n.value.slice(1))
         }
     }
     else {
@@ -296,6 +303,7 @@ function search(n,t = ''){
             if(this.status == 200 && this.readyState == 4)
                 if(this.responseText != undefined){
                     setTimeout(()=>{
+                        n.parentElement.children[1].children[0] = ''
                         JSON.parse(this.responseText).items.forEach(d=>{
                             var arr = {
                                 im:d.volumeInfo.imageLinks.smallThumbnail,
@@ -306,7 +314,7 @@ function search(n,t = ''){
                             }
                             book(arr,n.parentElement.children[1].children[0])
                         })
-                    },300)
+                    },100)
                 }
         }
         xml.open('get','https://www.googleapis.com/books/v1/volumes?q='+n.value+'&key=AIzaSyBBPeeNyKzSJaA7uOl0_Emt6gc-hEhuFQY',true);
@@ -319,32 +327,50 @@ function search(n,t = ''){
 function searchBy(t,v){
     ref.child('books').orderByChild(t).equalTo(v).once('value',m=>{
         //append an absolute select element
-        $i('s-res-'+t).innerHTML = ''
-
-        m.forEach(d=>{
-            let v = d.val()
-            bookInfo = d;
-            var arr = {
-                im:'',
-                title:v.title,
-                author:v.author,
-                isbn:v.isbn,
-                tags:v.tags,
-                swap:v.swap,
-                swapStars:v.swapStars,
-                lend:v.lend,
-                lendPrice:v.lendPrice,
-                lendPoints:v.lendPoints,
-                sell:v.sell,
-                sellPrice:v.sellPrice,
-                gov:v.gov,
-                area:v.area,
-                user:v.userId,
-                id:d.key
-            }
-            if(d.exists())
-            book(arr,$i('s-res-'+t),'select')
-        })
+        if(m.exists()){
+            m.forEach(d=>{
+                let v = d.val()
+                bookInfo = d;
+                if(v.img)
+                    var arr = {
+                        im:v.img,
+                        title:v.title,
+                        author:v.author,
+                        isbn:v.isbn,
+                        tags:v.tags,
+                        swap:v.swap,
+                        swapStars:v.swapStars,
+                        lend:v.lend,
+                        lendPrice:v.lendPrice,
+                        lendPoints:v.lendPoints,
+                        sell:v.sell,
+                        sellPrice:v.sellPrice,
+                        gov:v.gov,
+                        area:v.area,
+                        user:v.userId,
+                        id:d.key
+                    }
+                else var arr = {
+                    title:v.title,
+                    author:v.author,
+                    isbn:v.isbn,
+                    tags:v.tags,
+                    swap:v.swap,
+                    swapStars:v.swapStars,
+                    lend:v.lend,
+                    lendPrice:v.lendPrice,
+                    lendPoints:v.lendPoints,
+                    sell:v.sell,
+                    sellPrice:v.sellPrice,
+                    gov:v.gov,
+                    area:v.area,
+                    user:v.userId,
+                    id:d.key
+                }
+                book(arr,$i('s-res-'+t),'select')
+            })
+        }
+        // else $i('s-res-'+t).innerHTML += 'No results found'
     })
 }
 
@@ -438,8 +464,8 @@ function chat(t,e=document.body){
             var chatPop = dc('div'),
             chatHeader = dc('div'),
             chatCheck = dc('div'),
-            check1 = dc('input'),
-            check2 = dc('input'),
+            form = dc('form'),
+            tog = dc('button'),
             chatClose = dc('button'),
             chatBody = dc('div'),
             chatFooter = dc('form'),
@@ -455,15 +481,19 @@ function chat(t,e=document.body){
 
             chatMess.setAttribute('data-trans',e.getAttribute('data-trans'))
 
-            check1.type = 'checkbox'
-            check2.type = 'checkbox'
+            // check1.type = 'checkbox'
+            // check2.type = 'checkbox'
             chatMess.type = 'text'
             chatSend.type = 'submit'
 
             chatFooter.onsubmit = ()=>{chat('send',chatMess);return false}
 
             ref.child('transactions/'+e.getAttribute('data-trans')).once('value',m=>{
-                ref.child('users/'+m.val().owner).once('value',n=>{
+                var nameKey;
+                if(m.val().owner == user.id)
+                    nameKey = m.val().requester
+                else nameKey = m.val().owner
+                ref.child('users/'+nameKey).once('value',n=>{
                     chatHeader.innerHTML += n.val().name
                 }).then(()=>{
                     chatHeader.appendChild(chatClose)
@@ -473,8 +503,8 @@ function chat(t,e=document.body){
                 })
             })            
 
-            chatCheck.appendChild(check1)
-            chatCheck.appendChild(check2)
+            chatCheck.appendChild(form)
+            chatCheck.appendChild(tog)
             chatHeader.appendChild(chatCheck)
             chatPop.appendChild(chatHeader)
             chatPop.appendChild(chatBody)
@@ -511,7 +541,6 @@ function chat(t,e=document.body){
         }
         case 'init':{
             var trans = e.parentElement.children[2].children[0].getAttribute('data-trans')
-            cl(trans)
             ref.child('chats/'+trans+'messages').on('child_added',m=>{mess_cache = m;chat('dis-mess',e)})
             // ref.child('chats/'+trans+'messages').on('value',m=>{mess_cache = m;chat('dis-mess',e)})
             break

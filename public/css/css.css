@@ -329,7 +329,7 @@ nav ul li div.dropIcon-cont:hover > h1.dropIcon{
 .dropDown{
 	position: absolute;
 	padding:1vw;
-	top:5.2vh;
+	top:4.5vh;
     right: 50%;
     transform: translate(50%);
 	display:none;
@@ -368,13 +368,12 @@ nav ul li div.dropIcon-cont:hover > h1.dropIcon{
 .s-radio{
 	display: inline-block;
 }
-.s-radio:checked ~ .s-res{
-	display:block;
+
+.s-radio:checked + .s-res{
+    display:block;
+    z-index: 500;
 }
-.s-radio:checked + label{
-	text-decoration: underline;
-	color:#4f4f4f;
-}
+
 .s-res{
 	display: none;
     position: absolute;
@@ -473,7 +472,7 @@ nav ul li i.dropIcon{
 	height:100%;
 	display: flex;
 	flex-flow: column;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	max-height:70vh;
 	min-height: 40vh;
 	position: relative;
