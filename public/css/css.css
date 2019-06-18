@@ -148,6 +148,16 @@ select:focus{
 	margin:0.2rem 0.5rem;
 	font-weight:500;
 }
+.dot{
+    display:none;
+    width:7px;
+    height:7px;
+    background:red;
+    border-radius:50%;
+    position: absolute;
+    top:20%;
+    right:0;
+}
 .btn.btn-login{
 	float:right;
 	margin: 1vw;
@@ -472,7 +482,7 @@ nav ul li i.dropIcon{
 	height:100%;
 	display: flex;
 	flex-flow: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	max-height:70vh;
 	min-height: 40vh;
 	position: relative;

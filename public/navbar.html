@@ -39,7 +39,8 @@
     <hr class="in" style="height:4vh;" size="40">
     
     <li class="in">
-        <div id="notifs" class="dropIcon-cont">
+        <div id="notifs" class="dropIcon-cont" onmouseover="seenF(this,'notifs')">
+            <div class="dot"></div>
             <i class="fas fa-bell dropIcon"></i>
             <div class="dropDown ">
                 <div class="dropContain shadow"></div>
@@ -47,7 +48,8 @@
         </div>
     </li>
     <li class="in">
-        <div id="trans" class="dropIcon-cont">
+        <div id="trans" class="dropIcon-cont" onmouseover="seenF(this,'trans')">
+            <div class="dot"></div>
             <i class="fas fa-exchange-alt dropIcon"></i>
             <div class="dropDown ">
                 <div class="dropContain shadow"></div>
@@ -55,7 +57,8 @@
         </div>
     </li>
     <li class="in">
-        <div id="people" class="dropIcon-cont">
+        <div id="people" class="dropIcon-cont" onmouseover="seenF(this,'chats')">
+            <div class="dot"></div>
             <i class="fas fa-users dropIcon"></i>
             <div class="dropDown ">
                 <div class="dropContain shadow"></div>
@@ -79,3 +82,27 @@
     </li>
     <!-- <div id="lang"><img class="out btn shadow f-l-s" src="imgs/00-Language.png" alt=""></div> -->
 </ul>
+
+<div class="gray-back hidable hide" id="gray-back-submit-location">
+    <div class="pop" onmouseover="on=true" onmouseout="on=false">
+        <form action="" onsubmit="submitLocation(event)" style="height:100%;display:flex;flex-flow:column;">
+            <div class="inp-cont">
+                <input type="checkbox" id="location" required>
+                <label for="title">Location</label>
+            </div>
+            <div class="inp-cont">
+                <input type="text" id="adress" required>
+                <label for="author">Adress</label>
+            </div>
+            <div class="inp-cont">
+                <input type="date" id="isbn">
+                <label for="isbn">day</label>
+            </div>
+            <div class="inp-cont">
+                <input type="datetime" id="tags">
+                <label for="tags">Time<small>(hours:minutes:am/pm)</small></label>
+            </div>
+            <button class="btn">Submit</button>
+        </form>
+    </div>
+</div>

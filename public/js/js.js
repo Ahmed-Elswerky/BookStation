@@ -51,8 +51,10 @@ var fire = {
                 remove('out','c');
                 // if(!document.body.classList.contains('home-p'))
                 //     window.location.href = 'home.html' 
-
-                $i('username').innerHTML = user.name;
+                var em = dc('p')
+                em.appendChild(document.createTextNode(user.email))
+                $i('username').innerHTML = user.name
+                $i('username').parentElement.children[1].children[0].insertAdjacentElement('afterbegin',em)
 
                 //book shelf page fill
                 if(booksJs != 0 && document.body.getAttribute('data-page') == "book-shelf")

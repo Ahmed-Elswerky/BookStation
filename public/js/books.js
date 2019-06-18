@@ -297,10 +297,9 @@ function book(arr,i,t=''){
             div.appendChild(bu)
             bElem.appendChild(div)
            /////////////////////////////////////////////////////////
-            bu.onclick = ()=>{
+            bu.onclick = (event)=>{
                 $i('init-req').children[0].innerHTML = ''
                 $i('req-sel').innerHTML = ''
-
                 var op = dc('option'),
                 bElem2 = bElem.cloneNode(true)
                 bElem2.children[3].remove()
@@ -330,6 +329,11 @@ function book(arr,i,t=''){
                 if($i('req-send') != undefined){
                     $i('req-send').setAttribute('data-book',arr.id)
                     $i('req-send').setAttribute('data-owner',arr.user)
+                    cl(event.path[2])
+                    for(var i = 0;i<$c('book').length;i++){
+                        if($c('book')[i] == event.path[2])
+                            $i('req-send').setAttribute('data-index',i)
+                    }
                 }
                 
                 toggleId('gray-back-request')

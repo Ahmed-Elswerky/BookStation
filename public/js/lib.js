@@ -95,9 +95,11 @@ function req(e){
             dat:Date(),
             info:$i('req-sel').value,
             owner:e.getAttribute('data-owner'),
-            status:'1'
+            status:'1',
+            seen:0
         })
         hide('gray-back-request','i')
+        $c('book')[e.getAttribute('data-index')].children[3].innerHTML = '<center>Request is sent</cente>'
     }
 }
 
@@ -105,6 +107,7 @@ function req(e){
 function init_notif(){
     if(user){
         //retrieving the requests of the user
+        
         ref.child('transactions').on('child_added',d=>{
             // if(m.exists()) 
             if(d.val().requester == user.id){
@@ -120,7 +123,7 @@ function init_notif(){
 
                             //if the transaction is not accepted yet
                             if(d.val().status == 1){
-                                $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
+                                $i('trans').children[2].children[0].insertAdjacentElement('afterbegin',p)
                             }
                             else{
                                 //retrieving the successful requests
@@ -132,16 +135,16 @@ function init_notif(){
                                                 p1.appendChild(dc('br'))
                                                 p1.appendChild(dc('br'))
     
-                                                $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
+                                                $i('notifs').children[2].children[0].insertAdjacentElement('afterbegin',p1) 
                                                 
-                                                chatPop_add(d,n,o)
+                                                chatPop_add('requester',d,n,o)
                                             }
                                             if(z.val().status == 'declined'){
                                                 p1.appendChild(document.createTextNode(n.val().name + ' declined request for ' + o.val().title))
                                                 p1.appendChild(dc('br'))
                                                 p1.appendChild(dc('br'))
     
-                                                $i('notifs').children[1].children[0].insertAdjacentElement('afterbegin',p1) 
+                                                $i('notifs').children[2].children[0].insertAdjacentElement('afterbegin',p1) 
                                             }
                                         })
                                     }
@@ -163,11 +166,10 @@ function init_notif(){
 
                     ref.child('users/'+d.val().requester).once('value',n=>{
                         ref.child('books/'+d.val().book).once('value',o=>{
-
                             ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
-                                if(q.exists()){
+                                if(q.exists()){cl('chat '+d.key)
                                     if(q.val().status == 'accepted')
-                                        chatPop_add(d,n,o)
+                                        chatPop_add('owner',d,n,o)
                                 }
                             })
 
@@ -176,7 +178,7 @@ function init_notif(){
                             button1.innerHTML = 'Decline'
                             button1.onclick = ()=>{
                                 ref.child('transactions/'+d.key).update({status:'-1'})
-                                ref.child('notifications').push().set({trans:d.key,status:'declined'}).then(()=>{
+                                ref.child('notifications').push().set({trans:d.key,status:'declined',seen1:0,seen2:0}).then(()=>{
                                     p.remove()
                                 })
                             }
@@ -187,21 +189,24 @@ function init_notif(){
                                 ref.child('transactions/'+d.key).update({status:'2'}).then(()=>{
                                     var dat = new Date();
                                     dat = dat.customFormat("#DD#/#MM#/#YYYY# #hh#:#mm#")
-                                    ref.child('chats/'+d.key).push({
+                                    ref.child('chats/'+d.key).update({seen1:0,seen2:0})
+                                    ref.child('chats/'+d.key+'/messages').push({
                                         mess:'',
                                         date:dat,
                                         user:''
                                     })
 
-                                    chatPop_add(d,n,o)
+                                    chatPop_add('owner',d,n,o)
                                 })
-                                ref.child('notifications').push().set({trans:d.key,status:'accepted'}).then(()=>{
+                                ref.child('notifications').push().set({trans:d.key,status:'accepted',seen1:0,seen2:0}).then(()=>{
                                     p.remove()
                                 })
                             }
 
-                            if(d.val().status == "1")
-                                $i('trans').children[1].children[0].insertAdjacentElement('afterbegin',p)
+                            if(d.val().status == "1"){
+                                $i('trans').children[2].children[0].insertAdjacentElement('afterbegin',p)
+                                $i('trans').children[0].style.display = 'block'
+                            }
                         })
                     })
                 // })
@@ -212,12 +217,23 @@ function init_notif(){
 }
 
 
-function chatPop_add(d,n,o){
+function chatPop_add(t,d,n,o){
+    if(t == 'owner'){
+        ref.child('chats/'+d.key).once('value',m=>{
+            if(m.val().seen1 == 0)
+                $i('people').children[0].style.display = 'block'
+        })
+    }if(t == 'requester'){
+        ref.child('chats/'+d.key).once('value',m=>{
+            if(m.val().seen2 == 0)
+                $i('people').children[0].style.display = 'block'
+        })
+    }
     var chat_head = dc('div')
     chat_head.setAttribute('data-trans',d.key)
     chat_head.onclick = ()=> chat('open',chat_head)
     chat_head.innerHTML = "Chat with "+n.val().name + " about "+o.val().title + "<br><br>"
-    $i('people').children[1].children[0].insertAdjacentElement('afterbegin',chat_head)
+    $i('people').children[2].children[0].insertAdjacentElement('afterbegin',chat_head)
 }
 
 
@@ -464,7 +480,6 @@ function chat(t,e=document.body){
             var chatPop = dc('div'),
             chatHeader = dc('div'),
             chatCheck = dc('div'),
-            form = dc('form'),
             tog = dc('button'),
             chatClose = dc('button'),
             chatBody = dc('div'),
@@ -485,6 +500,10 @@ function chat(t,e=document.body){
             // check2.type = 'checkbox'
             chatMess.type = 'text'
             chatSend.type = 'submit'
+            tog.innerHTML = 'ok'
+            tog.setAttribute("onclick","toggleId('gray-back-submit-location')")
+            tog.setAttribute("onmouseover",'on=true')
+            tog.setAttribute("onmouseleave",'on=false')
 
             chatFooter.onsubmit = ()=>{chat('send',chatMess);return false}
 
@@ -499,11 +518,10 @@ function chat(t,e=document.body){
                     chatHeader.appendChild(chatClose)
                 })
                 ref.child('books/'+m.val().book).once('value',n=>{
-                    chatHeader.innerHTML += '<br>Book title: '+n.val().title
+                    chatHeader.innerHTML += 'Book title: ' + n.val().title
                 })
             })            
 
-            chatCheck.appendChild(form)
             chatCheck.appendChild(tog)
             chatHeader.appendChild(chatCheck)
             chatPop.appendChild(chatHeader)
@@ -531,7 +549,7 @@ function chat(t,e=document.body){
                 e.value = ''
                 var dat = new Date();
                 dat = dat.customFormat("#DD#/#MM#/#YYYY# #hh#:#mm#")
-                ref.child('chats/'+e.getAttribute('data-trans')+'messages').push({
+                ref.child('chats/'+e.getAttribute('data-trans')+'/messages').push({
                     mess:mess,
                     date:dat,
                     user:user.id
@@ -541,7 +559,7 @@ function chat(t,e=document.body){
         }
         case 'init':{
             var trans = e.parentElement.children[2].children[0].getAttribute('data-trans')
-            ref.child('chats/'+trans+'messages').on('child_added',m=>{mess_cache = m;chat('dis-mess',e)})
+            ref.child('chats/'+trans+'/messages').on('child_added',m=>{mess_cache = m;chat('dis-mess',e)})
             // ref.child('chats/'+trans+'messages').on('value',m=>{mess_cache = m;chat('dis-mess',e)})
             break
         }
@@ -566,5 +584,58 @@ function chat(t,e=document.body){
             break
         }
         default:break;
+    }
+}
+
+function seenF(e,t){
+    switch(t){
+        case 'notifs':{
+            ref.child('transactions').orderByChild('owner').equalTo(user.id).once('value',m=>{
+                m.forEach(d=>{
+                    ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',x=>{
+                        x.forEach(g=>{
+                            ref.child('notifications/'+g.key).update({seen1:1})
+                            e.children[0].style.display = 'none'
+                        })
+                    })
+                })
+            })
+            ref.child('transactions').orderByChild('requester').equalTo(user.id).once('value',m=>{
+                m.forEach(d=>{
+                    ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',x=>{
+                        x.forEach(g=>{
+                            ref.child('notifications/'+g.key).update({seen2:1})
+                            e.children[0].style.display = 'none'
+                        })
+                    })
+                })
+            })
+            break
+        }
+        case 'chats':{
+            ref.child('transactions').orderByChild('owner').equalTo(user.id).once('value',m=>{
+                m.forEach(d=>{
+                    ref.child('chats/'+d.key).update({seen1:1})
+                    e.children[0].style.display = 'none'
+                })
+            })
+            ref.child('transactions').orderByChild('requester').equalTo(user.id).once('value',m=>{
+                m.forEach(d=>{
+                    ref.child('chats/'+d.key).update({seen2:1})
+                    e.children[0].style.display = 'none'
+                })
+            })
+            break
+        }
+        case 'trans':{
+            ref.child('transactions').orderByChild('owner').equalTo(user.id).once('value',m=>{
+                m.forEach(d=>{
+                    ref.child('transactions/'+d.key).update({seen:1})
+                    e.children[0].style.display = 'none'
+                })
+            })
+            break
+        }
+        default:break
     }
 }
