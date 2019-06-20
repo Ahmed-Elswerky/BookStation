@@ -527,7 +527,7 @@ nav ul li i.dropIcon{
 	/* line-height:9vh; */
 	/* text-align: right; */
 }
-#init-req-h1{
+.pop-head{
 	display: inline-block;
     background: #796048;
     border: 1px solid;
@@ -832,7 +832,8 @@ input:focus + label,input:valid + label{
 .book div{
 	display: flex;
 	flex-flow: column;
-	justify-content: space-evenly;
+    justify-content: space-evenly;
+    margin:0.2rem;
 }
 .home-p .book{
 	padding-right:15%;	
@@ -901,7 +902,10 @@ input:focus + label,input:valid + label{
 	box-shadow:0px 0px 2px 0px #8b8b8b;
 }
 .chat-header{
-	height:7vh;
+    height:7vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .chat-body{
 	height:30vh;

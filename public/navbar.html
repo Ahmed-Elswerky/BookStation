@@ -85,24 +85,26 @@
 
 <div class="gray-back hidable hide" id="gray-back-submit-location">
     <div class="pop" onmouseover="on=true" onmouseout="on=false">
-        <form action="" onsubmit="submitLocation(event)" style="height:100%;display:flex;flex-flow:column;">
-            <div class="inp-cont">
-                <input type="checkbox" id="location" required>
-                <label for="title">Location</label>
+        <div id="greeting">
+            <h1 class="pop-head">Confirm meeting data</h1>
+        </div>
+        <form action="#" onsubmit="submitLocation(this);return false" style="height:80%;display:flex;flex-flow:column;">
+            <div class="inp-cont" id="location-confirm" style="font-size: 1.2rem;border:1px solid brown;">
+                Location
             </div>
             <div class="inp-cont">
                 <input type="text" id="adress" required>
-                <label for="author">Adress</label>
+                <label for="adress">Adress inside area</label>
             </div>
             <div class="inp-cont">
-                <input type="date" id="isbn">
-                <label for="isbn">day</label>
+                <input type="date" id="day" required>
+                <label for="day">day</label>
             </div>
             <div class="inp-cont">
-                <input type="datetime" id="tags">
-                <label for="tags">Time<small>(hours:minutes:am/pm)</small></label>
+                <input type="datetime" id="time" required>
+                <label for="time">Time <small> (hh : mm : am/pm)</small></label>
             </div>
-            <button class="btn">Submit</button>
+            <button class="btn">Confirm</button>
         </form>
     </div>
 </div>

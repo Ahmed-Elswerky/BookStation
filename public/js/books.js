@@ -56,7 +56,8 @@ function bookInit(t){
 									var exis = true
 									n.forEach(e=>{
 										if(e.exists()){
-											exis *= false
+                                            if(e.val().requester == user.id)
+    											exis *= false
 										}
 									})
 									if(exis){

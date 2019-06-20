@@ -167,10 +167,16 @@ function init_notif(){
                     ref.child('users/'+d.val().requester).once('value',n=>{
                         ref.child('books/'+d.val().book).once('value',o=>{
                             ref.child('notifications').orderByChild('trans').equalTo(d.key).once('value',q=>{
-                                if(q.exists()){cl('chat '+d.key)
-                                    if(q.val().status == 'accepted')
-                                        chatPop_add('owner',d,n,o)
-                                }
+                                q.forEach(v=>{
+                                    if(v.exists()){
+                                        cl('chat '+d.key)
+                                        cl(v.val().status)
+                                        if(v.val().status == 'accepted'){
+                                            cl('chat accep')
+                                            chatPop_add('owner',d,n,o)
+                                        }
+                                    }
+                                })
                             })
 
                             p.appendChild(document.createTextNode(n.val().name + ' requested \''+o.val().title + '\' From you '))
@@ -231,8 +237,12 @@ function chatPop_add(t,d,n,o){
     }
     var chat_head = dc('div')
     chat_head.setAttribute('data-trans',d.key)
-    chat_head.onclick = ()=> chat('open',chat_head)
-    chat_head.innerHTML = "Chat with "+n.val().name + " about "+o.val().title + "<br><br>"
+    chat_head.onclick = ()=> {
+        chat('open',chat_head)
+        $i('location-confirm').innerHTML = 'Area: '+o.val().gov.charAt(0).toUpperCase()+o.val().gov.slice(1)+', '+o.val().area.charAt(0).toUpperCase()+o.val().area.slice(1)
+        $i('location-confirm').parentElement.setAttribute('data-key',d.key)
+    }
+    chat_head.innerHTML = "Chat with "+n.val().name + " about '"+o.val().title + "'<br><br>"
     $i('people').children[2].children[0].insertAdjacentElement('afterbegin',chat_head)
 }
 
@@ -500,29 +510,32 @@ function chat(t,e=document.body){
             // check2.type = 'checkbox'
             chatMess.type = 'text'
             chatSend.type = 'submit'
-            tog.innerHTML = 'ok'
+            tog.innerHTML = '👌'
             tog.setAttribute("onclick","toggleId('gray-back-submit-location')")
             tog.setAttribute("onmouseover",'on=true')
             tog.setAttribute("onmouseleave",'on=false')
-
+            
             chatFooter.onsubmit = ()=>{chat('send',chatMess);return false}
 
             ref.child('transactions/'+e.getAttribute('data-trans')).once('value',m=>{
                 var nameKey;
-                if(m.val().owner == user.id)
+                if(m.val().owner == user.id){
                     nameKey = m.val().requester
+                    chatCheck.appendChild(tog)
+                }
                 else nameKey = m.val().owner
                 ref.child('users/'+nameKey).once('value',n=>{
                     chatHeader.innerHTML += n.val().name
                 }).then(()=>{
                     chatHeader.appendChild(chatClose)
-                })
-                ref.child('books/'+m.val().book).once('value',n=>{
-                    chatHeader.innerHTML += 'Book title: ' + n.val().title
+                    chatHeader.appendChild(dc('br'))
+                    ref.child('books/'+m.val().book).once('value',n=>{
+                        chatHeader.innerHTML += 'Book title: \'' + n.val().title +'\''
+                    })
                 })
             })            
 
-            chatCheck.appendChild(tog)
+            // tog.onclick = ()=>toggleId('gray-back-submit-location')
             chatHeader.appendChild(chatCheck)
             chatPop.appendChild(chatHeader)
             chatPop.appendChild(chatBody)
@@ -638,4 +651,19 @@ function seenF(e,t){
         }
         default:break
     }
+}
+
+function submitLocation(e){
+    event.preventDefault()
+    ref.child('transactions/'+e.getAttribute('data-key')).update({
+        adress:$i('adress').value,
+        day:$i('day').value,
+        time:$i('time').value
+    }).then(()=>{
+        ref.child('chats/'+e.getAttribute('data-key')+'/messages').push({
+            user:user.id,
+            time:'',
+            mess:'Meeting confirmation <br>'+$i('location-confirm').innerHTML+'<br>Adress: '+$i('adress').value+'<br> Day: '+$i('day').value+'<br> Time: '+$i('time').value
+        })
+    })
 }
